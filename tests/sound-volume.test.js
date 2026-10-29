@@ -30,7 +30,7 @@ function runSound(isTouch) {
             return {
                 gain: {
                     setValueAtTime: function() {},
-                    exponentialRampToValueAtTime: function(value) { levels.push(value); }
+                    exponentialRampToValueAtTime: function(value) { if (value > 0.0001) levels.push(value); }
                 },
                 connect: function() {}
             };
