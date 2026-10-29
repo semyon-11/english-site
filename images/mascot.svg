@@ -7,27 +7,27 @@
     <linearGradient id="face" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9ca"/><stop offset="1" stop-color="#f2c795"/></linearGradient>
   </defs>
 
-  <!-- The long tail hangs down over the edge of the navigation button. -->
+  
   <path d="M260 294 C320 282 368 297 385 334 C409 385 383 439 344 440 C315 441 300 421 310 400 C316 386 333 384 343 395" fill="none" stroke="#81482d" stroke-width="27" stroke-linecap="round"/>
   <path d="M260 294 C320 282 368 297 385 334 C409 385 383 439 344 440 C315 441 300 421 310 400 C316 386 333 384 343 395" fill="none" stroke="#c98756" stroke-width="8" stroke-linecap="round"/>
 
-  <!-- Sweater and arms -->
+  
   <path d="M74 365 C83 316 107 290 140 282 L224 282 C264 291 286 322 295 365 Q186 395 74 365Z" fill="url(#shirt)" stroke="#206f6c" stroke-width="5"/>
   <path d="M102 322 C81 306 62 288 58 266 C55 250 68 239 82 247 C99 258 105 280 128 292" fill="none" stroke="#a86239" stroke-width="26" stroke-linecap="round"/>
   <path d="M263 322 C283 306 301 286 306 264 C309 249 297 239 283 247 C268 258 259 280 237 292" fill="none" stroke="#a86239" stroke-width="26" stroke-linecap="round"/>
   <path d="M58 264 Q55 247 70 242 Q84 240 91 255 M306 262 Q310 246 294 242 Q280 240 273 255" fill="none" stroke="#d18b58" stroke-width="10" stroke-linecap="round"/>
 
-  <!-- Legs and little feet, resting over the edge -->
+  
   <path d="M126 351 C119 370 121 384 137 392 L161 391 C174 383 173 368 166 350Z M205 351 C198 369 201 384 216 392 L240 391 C254 382 253 368 245 350Z" fill="#a65f39" stroke="#874b2b" stroke-width="4"/>
   <path d="M140 384 C130 395 128 416 131 430 Q149 439 171 430 C177 411 171 396 161 386Z M218 384 C207 396 205 414 210 430 Q229 439 250 430 C256 411 250 396 240 386Z" fill="#f0c18f" stroke="#874b2b" stroke-width="4"/>
   <path d="M132 420 Q150 428 170 420 M211 420 Q230 428 250 420" fill="none" stroke="#fff0d9" stroke-width="5" stroke-linecap="round"/>
 
-  <!-- Open book -->
+  
   <path d="M113 315 Q148 301 181 321 Q214 301 249 315 L249 356 Q214 342 181 360 Q148 342 113 356Z" fill="#fff8e8" stroke="#d6a34e" stroke-width="4" stroke-linejoin="round"/>
   <path d="M181 321 L181 359 M130 330 Q151 324 166 332 M130 341 Q151 335 166 343 M196 332 Q215 324 233 330 M196 343 Q215 335 233 341" fill="none" stroke="#8ebbb2" stroke-width="3" stroke-linecap="round"/>
   <path d="M179 308 L185 298 L191 308 L203 310 L194 319 L196 331 L185 325 L174 331 L176 319 L167 310Z" fill="#f6c95d"/>
 
-  <!-- Ears -->
+  
   <circle cx="73" cy="176" r="48" fill="url(#fur)" stroke="#874b2b" stroke-width="5"/>
   <circle cx="287" cy="176" r="48" fill="url(#fur)" stroke="#874b2b" stroke-width="5"/>
   <circle cx="73" cy="176" r="27" fill="#e9a77e"/>
@@ -35,11 +35,11 @@
   <circle cx="73" cy="176" r="14" fill="#f4c69d" opacity=".8"/>
   <circle cx="287" cy="176" r="14" fill="#f4c69d" opacity=".8"/>
 
-  <!-- Head -->
+  
   <path d="M85 176 C79 108 123 54 180 53 C238 52 282 107 276 176 C273 247 235 282 180 285 C125 282 87 246 85 176Z" fill="url(#fur)" stroke="#874b2b" stroke-width="5"/>
   <path d="M153 63 Q145 39 161 30 Q164 47 177 47 Q185 27 197 30 Q201 46 211 53" fill="#a96339" stroke="#874b2b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <!-- Face -->
+  
   <path d="M115 156 C117 111 146 91 180 92 C215 91 243 113 245 157 C249 211 222 245 180 249 C138 245 111 211 115 156Z" fill="url(#face)"/>
   <ellipse cx="180" cy="206" rx="66" ry="43" fill="#ffedcf"/>
   <ellipse cx="180" cy="177" rx="12" ry="8" fill="#80452f"/>
@@ -55,7 +55,7 @@
   <path d="M147 218 Q180 235 213 218 Q208 232 180 235 Q152 232 147 218Z" fill="#fffaf1"/>
   <path d="M165 245 Q180 250 195 245" fill="none" stroke="#d98174" stroke-width="4" stroke-linecap="round"/>
 
-  <!-- Yellow scarf -->
+  
   <path d="M139 270 Q180 291 221 270 L212 302 Q180 315 148 302Z" fill="#f2c65b" stroke="#bd8d36" stroke-width="4" stroke-linejoin="round"/>
   <path d="M204 293 L231 305 L216 322 L195 301Z" fill="#f2c65b" stroke="#bd8d36" stroke-width="3"/>
 </svg>

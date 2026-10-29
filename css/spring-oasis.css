@@ -451,7 +451,7 @@ header.site-header {
     animation: image-in .45s var(--ease) both;
 }
 
-/* A single Toby element travels between the home page, topics, exercises and progress. */
+
 .mascot-companion {
     position: relative;
     z-index: 4;
@@ -717,5 +717,365 @@ header.site-header {
         animation-duration: .01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: .01ms !important;
+    }
+}
+
+:root {
+    --teal: #52AEA3;
+    --teal-dark: #206E64;
+    --teal-deep: #164B43;
+    --mint: #AEDDCB;
+    --mint-soft: #E4F3EB;
+    --lime: #AADF87;
+    --paper: #F7F8F3;
+    --ink: #173B34;
+    --muted: #435F55;
+    --line: #BFD9CD;
+}
+
+body {
+    color: var(--ink);
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.site-header h1,
+.site-header p,
+.exercise-title,
+.section-heading .exercise-title,
+.progress-section-title,
+.stat-card h3,
+.modal-content h2,
+.modal-content label {
+    color: var(--teal-deep);
+}
+
+.site-header h1 {
+    font-weight: 900;
+}
+
+.site-header p,
+.exercise-question,
+.exercise-instruction,
+.option-label,
+.topic-btn,
+.nav-btn,
+.matching-item,
+.next-btn,
+.check-btn,
+.audio-btn,
+.back-btn,
+.result,
+.progress-count,
+.progress-correct,
+.progress-incorrect {
+    font-weight: 750;
+}
+
+.header-copy p,
+.progress-greeting,
+.progress-count,
+.matching-feedback,
+.image-placeholder,
+.progress-empty {
+    color: var(--muted);
+}
+
+.main-nav {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 14px;
+}
+
+.main-nav > .nav-btn {
+    width: 100%;
+    height: 100%;
+    min-height: 96px;
+}
+
+.nav-btn {
+    border: 2px solid #BFD9CD;
+    color: var(--teal-deep);
+}
+
+.nav-btn:hover,
+.nav-btn:focus-visible {
+    border-color: var(--teal-dark);
+    background: #DDF1E6;
+    color: var(--teal-deep);
+}
+
+.nav-btn--progress {
+    border-color: #9CCF7C;
+    background: #E8F5DE;
+    color: var(--teal-deep);
+}
+
+.nav-btn--progress:hover,
+.nav-btn--progress:focus-visible {
+    border-color: #6CA94B;
+    background: #D8EFC9;
+    color: var(--teal-deep);
+}
+
+.topics-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
+    align-items: stretch;
+    gap: 16px;
+}
+
+.topic-btn {
+    width: 100%;
+    height: 100%;
+    min-height: 92px;
+    padding: 20px 24px;
+    border: 2px solid #BFD9CD;
+    color: var(--teal-deep);
+    font-size: 1.12rem;
+}
+
+.topic-btn:hover,
+.topic-btn:focus-visible {
+    border-color: var(--teal-dark);
+    background: var(--teal-dark);
+    color: #FFFFFF;
+}
+
+.options {
+    grid-auto-rows: 1fr;
+    align-items: stretch;
+    gap: 12px;
+}
+
+.option-label {
+    min-height: 66px;
+    height: 100%;
+    border: 2px solid #C8DED3;
+    color: #173B34;
+    font-size: 1.08rem;
+    line-height: 1.4;
+}
+
+.option-label:hover,
+.option-label:focus-within {
+    border-color: var(--teal-dark);
+    background: #DDF1E6;
+    color: #123E36;
+}
+
+.option-label.correct-answer {
+    border-color: #4E9B68;
+    background: #E2F4E4;
+    color: #205B36;
+}
+
+.option-label.wrong-answer {
+    border-color: #B96D52;
+    background: #FFF0E8;
+    color: #713923;
+}
+
+.exercise-question {
+    color: #173B34;
+    font-size: clamp(1.2rem, 2.5vw, 1.42rem);
+}
+
+.exercise-instruction {
+    border-color: #A8D4C2;
+    border-left-color: var(--teal-dark);
+    background: #EAF5EE;
+    color: #164B43;
+    font-size: 1.1rem;
+}
+
+.matching-container {
+    align-items: stretch;
+    gap: 16px;
+}
+
+.matching-item {
+    min-height: 62px;
+    border: 2px solid #C8DED3;
+    color: #173B34;
+    font-size: 1.05rem;
+}
+
+.matching-item:hover:not(:disabled) {
+    border-color: var(--teal-dark);
+    background: #DDF1E6;
+    color: #123E36;
+}
+
+.matching-item.selected {
+    border-color: #164B43;
+    background: #206E64;
+    color: #FFFFFF;
+}
+
+.matching-item.matched {
+    border-color: #4E9B68;
+    background: #E2F4E4;
+    color: #205B36;
+}
+
+.matching-item.wrong {
+    border-color: #B96D52;
+    background: #FFF0E8;
+    color: #713923;
+}
+
+.fill-input {
+    border: 2px solid #AFCDBF;
+    color: #173B34;
+    font-size: 1.1rem;
+    font-weight: 650;
+}
+
+.fill-input::placeholder {
+    color: #5B7166;
+    opacity: 1;
+}
+
+.fill-input:focus {
+    border-color: var(--teal-dark);
+    box-shadow: 0 0 0 4px rgba(32, 110, 100, .17);
+}
+
+.next-btn,
+.check-btn,
+.audio-btn {
+    background: #206E64;
+    color: #FFFFFF;
+}
+
+.next-btn:hover,
+.check-btn:hover,
+.audio-btn:hover {
+    background: #164B43;
+    color: #FFFFFF;
+}
+
+.back-btn {
+    border: 2px solid #B2D4C3;
+    background: #E4F3EB;
+    color: #164B43;
+}
+
+.back-btn:hover,
+.back-btn:focus-visible {
+    border-color: #79B79B;
+    background: #CDE9DA;
+    color: #123E36;
+}
+
+.progress-stats {
+    grid-auto-rows: 1fr;
+    align-items: stretch;
+    gap: 15px;
+}
+
+.stat-card {
+    height: 100%;
+    border: 2px solid #C8DED3;
+    background: #FFFFFF;
+}
+
+.stat-card h3 {
+    font-size: 1.12rem;
+}
+
+.progress-correct {
+    color: #205B36;
+}
+
+.progress-incorrect {
+    color: #713923;
+}
+
+.mascot-speech {
+    border: 2px solid #A8D4C2;
+    color: #164B43;
+    font-size: 1rem;
+}
+
+.result.correct {
+    border-color: #86C396;
+    background: #E8F6E9;
+    color: #205B36;
+}
+
+.result.incorrect {
+    border-color: #D6A58F;
+    background: #FFF2E9;
+    color: #713923;
+}
+
+.modal-content h2 {
+    font-size: 1.75rem;
+}
+
+.modal-content .fill-input {
+    font-size: 1.08rem;
+}
+
+@media (max-width: 900px) {
+    .main-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 620px) {
+    body {
+        font-size: 17px;
+    }
+
+    .main-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .main-nav > .nav-btn {
+        min-height: 78px;
+        padding: 14px 10px;
+        font-size: 1rem;
+    }
+
+    .topics-list {
+        grid-template-columns: 1fr;
+        gap: 11px;
+    }
+
+    .topic-btn {
+        min-height: 78px;
+        padding: 17px 19px;
+        font-size: 1.08rem;
+    }
+
+    .option-label {
+        min-height: 60px;
+        font-size: 1.02rem;
+    }
+
+    .matching-container {
+        gap: 9px;
+    }
+
+    .matching-item {
+        min-height: 54px;
+        padding: 10px 7px;
+        font-size: .94rem;
+    }
+}
+
+@media (max-width: 370px) {
+    .main-nav {
+        gap: 8px;
+    }
+
+    .main-nav > .nav-btn {
+        padding: 11px 7px;
+        font-size: .94rem;
     }
 }

@@ -3,7 +3,7 @@
     <linearGradient id="fur" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d28a54"/><stop offset="1" stop-color="#95502e"/></linearGradient>
     <linearGradient id="face" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9ca"/><stop offset="1" stop-color="#f2c795"/></linearGradient>
   </defs>
-  <!-- Transparent background: Toby fills the whole square icon. -->
+  
   <circle cx="16" cy="70" r="27" fill="url(#fur)" stroke="#874b2b" stroke-width="3"/>
   <circle cx="112" cy="70" r="27" fill="url(#fur)" stroke="#874b2b" stroke-width="3"/>
   <circle cx="16" cy="70" r="15" fill="#e9a77e"/>
