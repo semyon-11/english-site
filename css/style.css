@@ -527,19 +527,24 @@ input:focus-visible {
 }
 
 
-/* Mascot: a permanent site companion with feedback inside exercises */
+
+/* Toby sits above the navigation, with his feet and tail hanging over a button. */
+.container {
+    position: relative;
+}
+
 header.site-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
+    position: relative;
+    z-index: 5;
+    display: block;
+    min-height: 150px;
+    padding: 30px 190px 30px 24px;
     text-align: left;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .site-header .header-copy {
-    flex: 1;
-    min-width: 0;
+    max-width: 570px;
 }
 
 .site-header h1,
@@ -548,17 +553,37 @@ header.site-header {
 }
 
 .mascot-header {
-    flex: 0 0 132px;
-    align-self: flex-end;
-    margin: -8px 0 -14px;
+    position: absolute;
+    right: 10px;
+    bottom: -112px;
+    z-index: 10;
+    width: 190px;
+    height: 206px;
+    pointer-events: none;
+    transform: rotate(2deg);
+    filter: drop-shadow(0 7px 5px rgba(30, 70, 80, 0.18));
 }
 
 .mascot-header img {
     display: block;
-    width: 132px;
-    height: 148px;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 5px 4px rgba(30, 70, 80, 0.14));
+    object-position: center bottom;
+}
+
+.main-nav {
+    position: relative;
+    z-index: 1;
+    justify-content: space-between;
+    gap: 10px;
+    padding-right: 112px;
+}
+
+.nav-btn--progress {
+    min-width: 235px;
+    padding: 18px 104px 18px 20px;
+    text-align: left;
 }
 
 .mascot-feedback {
@@ -624,8 +649,9 @@ header.site-header {
 
 @media (max-width: 600px) {
     header.site-header {
-        gap: 8px;
-        padding: 22px 15px;
+        min-height: 128px;
+        padding: 22px 122px 22px 15px;
+        margin-bottom: 10px;
     }
 
     .site-header h1 {
@@ -637,13 +663,23 @@ header.site-header {
     }
 
     .mascot-header {
-        flex-basis: 88px;
-        margin: -4px 0 -10px;
+        right: 2px;
+        bottom: -78px;
+        width: 116px;
+        height: 132px;
     }
 
-    .mascot-header img {
-        width: 88px;
-        height: 104px;
+    .main-nav {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding-right: 0;
+    }
+
+    .nav-btn--progress {
+        min-width: 0;
+        padding: 14px 20px;
+        text-align: center;
     }
 
     .mascot-feedback {
@@ -668,11 +704,8 @@ header.site-header {
     }
 
     .mascot-header {
-        flex-basis: 72px;
-    }
-
-    .mascot-header img {
-        width: 72px;
-        height: 88px;
+        width: 104px;
+        height: 120px;
+        right: 0;
     }
 }
