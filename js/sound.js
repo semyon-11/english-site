@@ -1,6 +1,15 @@
 (function() {
     var audioContext = null;
 
+    function isTouchDevice() {
+        if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return false;
+        try {
+            return window.matchMedia('(pointer: coarse)').matches;
+        } catch (error) {
+            return false;
+        }
+    }
+
     function getAudioContext() {
         if (typeof window === 'undefined') return null;
         var AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
@@ -20,7 +29,7 @@
         }
     }
 
-    function playTone(frequency, delay, duration, volume) {
+    function playTone(frequency, delay, duration, desktopVolume, mobileVolume) {
         var context = getAudioContext();
         if (!context) return;
 
@@ -28,6 +37,8 @@
             var start = context.currentTime + delay;
             var oscillator = context.createOscillator();
             var gain = context.createGain();
+            var volume = isTouchDevice() ? mobileVolume : desktopVolume;
+
             oscillator.type = 'sine';
             oscillator.frequency.setValueAtTime(frequency, start);
             gain.gain.setValueAtTime(0.0001, start);
@@ -43,16 +54,16 @@
     }
 
     function playClickSound() {
-        playTone(520, 0, 0.055, 0.009);
+        playTone(520, 0, 0.055, 0.035, 0.11);
     }
 
     function playAnswerSound(isCorrect) {
         if (isCorrect) {
-            playTone(660, 0, 0.075, 0.014);
-            playTone(880, 0.075, 0.095, 0.012);
+            playTone(660, 0, 0.075, 0.05, 0.13);
+            playTone(880, 0.075, 0.095, 0.055, 0.14);
         } else {
-            playTone(330, 0, 0.065, 0.012);
-            playTone(262, 0.065, 0.08, 0.01);
+            playTone(330, 0, 0.065, 0.045, 0.12);
+            playTone(262, 0.065, 0.08, 0.04, 0.11);
         }
     }
 
@@ -68,24 +79,29 @@
             !control.classList.contains('disabled');
     }
 
+    function animateControl(control) {
+        control.classList.remove('is-pressed');
+        void control.offsetWidth;
+        control.classList.add('is-pressed');
+        window.setTimeout(function() {
+            control.classList.remove('is-pressed');
+        }, 240);
+    }
+
     if (typeof document !== 'undefined') {
         document.addEventListener('pointerdown', function(event) {
             var control = findControl(event.target);
             if (!isAvailable(control)) return;
-            control.classList.remove('is-pressed');
-            void control.offsetWidth;
-            control.classList.add('is-pressed');
+            animateControl(control);
             playClickSound();
-
-            window.setTimeout(function() {
-                control.classList.remove('is-pressed');
-            }, 240);
         }, { passive: true });
 
         document.addEventListener('click', function(event) {
             if (event.detail !== 0) return;
             var control = findControl(event.target);
-            if (isAvailable(control)) playClickSound();
+            if (!isAvailable(control)) return;
+            animateControl(control);
+            playClickSound();
         });
     }
 

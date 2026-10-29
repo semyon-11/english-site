@@ -1,0 +1,227 @@
+@media (max-width: 900px) {
+    .main-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    header.site-header { min-height: 176px; padding-right: 190px; }
+    .mascot-position--home .mascot-image { width: 145px; height: 160px; }
+}
+
+@media (max-width: 620px) {
+    body { padding: 12px 11px 20px; font-size: 16px; }
+    header.site-header {
+        min-height: 153px;
+        padding: 23px 126px 23px 19px;
+        border-radius: 22px;
+    }
+    .site-header h1 { font-size: clamp(1.7rem, 8vw, 2.35rem); }
+    .site-header p { font-size: .96rem; }
+    .mascot-position--home { right: 3px; bottom: -5px; }
+    .mascot-position--home .mascot-image { width: 119px; height: 135px; }
+    .mascot-position--home .mascot-speech { right: 88px; bottom: 65px; width: 160px; font-size: .84rem; }
+    .main-nav { gap: 9px; margin: 19px 0; }
+    .nav-btn { min-height: 78px; padding: 14px 9px; border-radius: 15px; font-size: 1rem; }
+    .section-heading { min-height: 100px; gap: 8px; }
+    .section-heading .exercise-title { font-size: 1.55rem; }
+    .mascot-position--topics .mascot-image,
+    .mascot-position--progress .mascot-image { width: 82px; height: 91px; }
+    .mascot-position--topics .mascot-speech,
+    .mascot-position--progress .mascot-speech { max-width: 150px; padding: 9px 11px; font-size: .78rem; }
+    .mascot-position--exercise .mascot-image { width: 88px; height: 98px; }
+    .mascot-position--exercise .mascot-speech { max-width: 175px; font-size: .84rem; }
+    .topics-list { grid-template-columns: 1fr; gap: 10px; }
+    .topic-btn { min-height: 76px; padding: 17px 19px; font-size: 1.08rem; }
+    .exercises { padding: 18px 13px; border-radius: 19px; }
+    .exercise-title { font-size: 1.5rem; }
+    .exercise-instruction { padding: 13px 14px; font-size: 1rem; }
+    .exercise-item { padding: 15px 12px; border-radius: 16px; }
+    .exercise-question { font-size: 1.1rem; }
+    .options { grid-template-columns: 1fr; }
+    .option-label { min-height: 58px; padding: 12px 13px; font-size: 1rem; }
+    .matching-container { gap: 8px; }
+    .matching-item { min-height: 54px; padding: 10px 7px; font-size: .92rem; overflow-wrap: anywhere; }
+    .fill-input { width: 100%; margin: 4px 0; }
+    .check-btn { width: 100%; margin: 8px 0 0; }
+    .audio-btn, .next-btn, .back-btn { min-height: 54px; }
+    .progress-heading { min-height: 92px; }
+    .stat-card { padding: 16px; }
+}
+
+@media (max-width: 370px) {
+    header.site-header { padding-left: 14px; padding-right: 106px; }
+    .site-header h1 { font-size: 1.62rem; }
+    .mascot-position--home .mascot-image { width: 105px; height: 121px; }
+    .main-nav { gap: 7px; }
+    .nav-btn { min-height: 72px; padding: 11px 6px; font-size: .92rem; }
+    .section-heading .exercise-title { font-size: 1.35rem; }
+    .mascot-position--topics .mascot-image,
+    .mascot-position--progress .mascot-image { width: 70px; height: 80px; }
+    .matching-item { font-size: .86rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+@media (max-width: 900px) {
+    .main-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 620px) {
+    body {
+        font-size: 17px;
+    }
+
+    .main-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .main-nav > .nav-btn {
+        min-height: 78px;
+        padding: 14px 10px;
+        font-size: 1rem;
+    }
+
+    .topics-list {
+        grid-template-columns: 1fr;
+        gap: 11px;
+    }
+
+    .topic-btn {
+        min-height: 78px;
+        padding: 17px 19px;
+        font-size: 1.08rem;
+    }
+
+    .option-label {
+        min-height: 60px;
+        font-size: 1.02rem;
+    }
+
+    .matching-container {
+        gap: 9px;
+    }
+
+    .matching-item {
+        min-height: 54px;
+        padding: 10px 7px;
+        font-size: .94rem;
+    }
+}
+
+@media (max-width: 370px) {
+    .main-nav {
+        gap: 8px;
+    }
+
+    .main-nav > .nav-btn {
+        padding: 11px 7px;
+        font-size: .94rem;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .nav-btn:active,
+    .topic-btn:active,
+    .next-btn:active,
+    .check-btn:active,
+    .audio-btn:active,
+    .back-btn:active,
+    .matching-item:active,
+    .option-label:active {
+        transform: scale(.96);
+        filter: brightness(.96);
+    }
+
+    button.is-pressed,
+    .option-label.is-pressed {
+        animation: tap-press .24s var(--ease);
+    }
+}
+
+@media (max-width: 900px) {
+    .container {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .main-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 620px) {
+    .main-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding-right: 0;
+    }
+
+    #mainContent > .topics-list {
+        grid-template-columns: 1fr;
+    }
+
+    .progress-greeting {
+        min-height: 66px;
+        gap: 5px 9px;
+        padding: 13px 14px;
+        font-size: 1.28rem;
+    }
+}
+
+@media (max-width: 370px) {
+    .progress-greeting {
+        font-size: 1.12rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .container {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .main-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 620px) {
+    .main-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding-right: 0;
+    }
+
+    #mainContent > .topics-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 370px) {
+    .container {
+        width: 100%;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .nav-btn:active,
+    .topic-btn:active,
+    .next-btn:active,
+    .check-btn:active,
+    .audio-btn:active,
+    .back-btn:active,
+    .matching-item:active,
+    .option-label:active {
+        transform: scale(.96);
+        filter: brightness(.96);
+    }
+
+    button.is-pressed,
+    .option-label.is-pressed {
+        animation: tap-press .24s var(--ease);
+    }
+}

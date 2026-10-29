@@ -72,7 +72,9 @@ class FakeElement {
 
 test('страница содержит одного постоянного Тоби и только основные элементы интерфейса', function() {
     const html = fs.readFileSync(path.join(rootDir, 'index.html'), 'utf8');
-    const css = fs.readFileSync(path.join(rootDir, 'css', 'spring-oasis.css'), 'utf8');
+    const css = ['foundation.css', 'layout.css', 'components.css', 'mascot.css', 'motion.css', 'responsive.css'].map(function(file) {
+        return fs.readFileSync(path.join(rootDir, 'css', file), 'utf8');
+    }).join('\n');
 
     assert.equal((html.match(/id="mascotCompanion"/g) || []).length, 1);
     assert.equal((html.match(/id="mascotImage"/g) || []).length, 1);
