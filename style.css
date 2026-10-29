@@ -270,6 +270,27 @@ header p {
     margin: 5px;
 }
 
+.check-btn {
+    background-color: #667eea;
+    color: white;
+    border: none;
+    padding: 9px 22px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.check-btn:hover {
+    background-color: #764ba2;
+}
+
+.check-btn:disabled {
+    background-color: #adb5bd;
+    cursor: default;
+}
+
 .fill-input.correct {
     border-color: #28a745;
     background-color: #d4edda;
@@ -278,6 +299,16 @@ header p {
 .fill-input.wrong {
     border-color: #dc3545;
     background-color: #f8d7da;
+}
+
+.topics-list:empty,
+.exercises:empty {
+    display: none;
+}
+
+.topics-list .exercise-title {
+    grid-column: 1 / -1;
+    margin-bottom: 0;
 }
 
 .hidden {

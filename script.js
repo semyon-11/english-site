@@ -135,7 +135,7 @@ const content = {
                         { q: '___ you like chocolate?', options: ['Do', 'Are', 'Is'], a: 0 },
                         { q: '___ she got a sister?', options: ['Has', 'Have', 'Is'], a: 0 },
                         { q: '___ colour is the snake?', options: ['What', 'Where', 'How'], a: 0 },
-                        { q: '___ is Petya?', options: ['What', 'Where', 'How'], a: 1 }
+                        { q: '___ is Petya? He is in the garden', options: ['What', 'Where', 'How'], a: 1 }
                     ]
                 }
             ]
@@ -189,7 +189,7 @@ const content = {
             exercises: [
                 {
                     type: 'audioBlends',
-                    instruction: 'Послушайте слово и выберите буквосочетание, с которого оно начинается'
+                    instruction: 'Послушайте слово и выберите буквосочетание, которое в нём есть'
                 }
             ]
         },
@@ -347,7 +347,7 @@ const content = {
                         { q: 'kitchen', image: 'kitchen', a: ['kitchen'] },
                         { q: 'bedroom', image: 'bedroom', a: ['bedroom'] },
                         { q: 'bathroom', image: 'bathroom', a: ['bathroom'] },
-                        { q: 'living room', image: 'living-room', a: ['living room'] },
+                        { q: 'living room', image: 'living-room', a: ['living room', 'living-room', 'livingroom'] },
                         { q: 'garden', image: 'garden', a: ['garden'] },
                         { q: 'table', image: 'table', a: ['table'] },
                         { q: 'chair', image: 'chair', a: ['chair'] },
@@ -368,7 +368,7 @@ const content = {
                         { q: 'burger', image: 'burger', a: ['burger'] },
                         { q: 'chips', image: 'chips', a: ['chips'] },
                         { q: 'pizza', image: 'pizza', a: ['pizza'] },
-                        { q: 'ice cream', image: 'ice cream', a: ['ice cream'] },
+                        { q: 'ice cream', image: 'ice-cream', a: ['ice cream', 'ice-cream', 'icecream'] },
                         { q: 'chocolate', image: 'chocolate', a: ['chocolate'] },
                         { q: 'sandwich', image: 'sandwich', a: ['sandwich'] }
                     ]
@@ -406,7 +406,7 @@ const content = {
                         { emoji: '😡', options: ['happy', 'angry', 'sad'], a: 1 },
                         { emoji: '😴', options: ['tired', 'happy', 'excited'], a: 0 },
                         { emoji: '😄', options: ['sad', 'happy', 'tired'], a: 1 },
-                        { emoji: '', options: ['happy', 'scared', 'angry'], a: 1 }
+                        { emoji: '😨', options: ['happy', 'scared', 'angry'], a: 1 }
                     ]
                 }
             ]
@@ -468,6 +468,14 @@ function shuffleArray(arr) {
         result[j] = temp;
     }
     return result;
+}
+
+function normalizeAnswer(text) {
+    return String(text)
+        .toLowerCase()
+        .replace(/[\u2018\u2019\u02bc`\u00b4]/g, "'")
+        .replace(/\s+/g, ' ')
+        .trim();
 }
 
 function initSpeech() {
@@ -714,7 +722,7 @@ function generateAudioBlendsExercise() {
     var options = shuffleArray(blends.slice());
     return {
         type: 'audio',
-        instruction: 'Послушайте слово и выберите буквосочетание, с которого оно начинается',
+        instruction: 'Послушайте слово и выберите буквосочетание, которое в нём есть',
         questions: [{ q: '', audio: word, options: options, a: options.indexOf(blend) }]
     };
 }
@@ -741,9 +749,9 @@ function generateAudioSoundsExercise() {
     };
 }
 
-function showSection(section) {
+function showSection(section, fromBack) {
     if (!getStudentName()) return;
-    navigationHistory.push('main');
+    if (!fromBack) navigationHistory.push('main');
     currentSection = section;
     var topicsList = document.getElementById('topicsList');
     var exercises = document.getElementById('exercises');
@@ -885,12 +893,12 @@ function renderExercise(exercise, container) {
             var img = document.createElement('img');
             img.className = 'exercise-image';
             img.src = 'images/' + q.image + '.png';
-            img.alt = q.image;
+            img.alt = 'Картинка к заданию';
             img.onerror = function() {
                 this.style.display = 'none';
                 var placeholder = document.createElement('div');
                 placeholder.className = 'image-placeholder';
-                placeholder.textContent = 'Картинка: ' + q.image;
+                placeholder.textContent = 'Картинка не загрузилась';
                 this.parentNode.insertBefore(placeholder, this);
             };
             qDiv.appendChild(img);
@@ -955,12 +963,12 @@ function renderExercise(exercise, container) {
         var img = document.createElement('img');
         img.className = 'exercise-image';
         img.src = 'images/' + q.image + '.png';
-        img.alt = q.image;
+        img.alt = 'Картинка к заданию';
         img.onerror = function() {
             this.style.display = 'none';
             var placeholder = document.createElement('div');
             placeholder.className = 'image-placeholder';
-            placeholder.textContent = 'Картинка: ' + q.image;
+            placeholder.textContent = 'Картинка не загрузилась';
             this.parentNode.insertBefore(placeholder, this);
         };
         qDiv.appendChild(img);
@@ -1092,20 +1100,7 @@ function renderExercise(exercise, container) {
         input.className = 'fill-input';
         input.placeholder = 'Введите ответ...';
 
-        input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                handleFillBlankAnswer(exerciseDiv, q, input);
-            }
-        });
-
-        input.addEventListener('blur', function() {
-            if (input.value.trim() !== '') {
-                handleFillBlankAnswer(exerciseDiv, q, input);
-            }
-        });
-
-        qDiv.appendChild(input);
-        exerciseDiv.appendChild(qDiv);
+        addFillBlankControls(exerciseDiv, qDiv, q, input);
     } else if (exercise.type === 'imageWord') {
         var exIdx = currentExerciseData.index;
         if (!usedQuestions[exIdx]) {
@@ -1142,12 +1137,12 @@ function renderExercise(exercise, container) {
         var img = document.createElement('img');
         img.className = 'exercise-image';
         img.src = 'images/' + q.image + '.png';
-        img.alt = q.image;
+        img.alt = 'Картинка к заданию';
         img.onerror = function() {
             this.style.display = 'none';
             var placeholder = document.createElement('div');
             placeholder.className = 'image-placeholder';
-            placeholder.textContent = 'Картинка: ' + q.image;
+            placeholder.textContent = 'Картинка не загрузилась';
             this.parentNode.insertBefore(placeholder, this);
         };
         qDiv.appendChild(img);
@@ -1157,20 +1152,7 @@ function renderExercise(exercise, container) {
         input.className = 'fill-input';
         input.placeholder = 'Введите ответ...';
 
-        input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                handleFillBlankAnswer(exerciseDiv, q, input);
-            }
-        });
-
-        input.addEventListener('blur', function() {
-            if (input.value.trim() !== '') {
-                handleFillBlankAnswer(exerciseDiv, q, input);
-            }
-        });
-
-        qDiv.appendChild(input);
-        exerciseDiv.appendChild(qDiv);
+        addFillBlankControls(exerciseDiv, qDiv, q, input);
     } else if (exercise.type === 'matching') {
         var matchingContainer = document.createElement('div');
         matchingContainer.className = 'matching-container';
@@ -1342,13 +1324,37 @@ function handleMultipleChoiceAnswer(exerciseDiv, q, selectedOptIndex, selectedLa
     }
 }
 
-function handleFillBlankAnswer(exerciseDiv, q, input) {
+function addFillBlankControls(exerciseDiv, qDiv, q, input) {
+    var checkBtn = document.createElement('button');
+    checkBtn.className = 'check-btn';
+    checkBtn.textContent = 'Проверить';
+    checkBtn.onclick = function() {
+        if (input.value.trim() === '') {
+            input.focus();
+            return;
+        }
+        handleFillBlankAnswer(exerciseDiv, q, input, checkBtn);
+    };
+
+    input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            checkBtn.click();
+        }
+    });
+
+    qDiv.appendChild(input);
+    qDiv.appendChild(checkBtn);
+    exerciseDiv.appendChild(qDiv);
+}
+
+function handleFillBlankAnswer(exerciseDiv, q, input, checkBtn) {
     if (input.dataset.processed === 'true') return;
     input.dataset.processed = 'true';
     
     input.disabled = true;
-    var userAnswer = input.value.toLowerCase().trim();
-    var acceptedAnswers = q.a.map(function(ans) { return ans.toLowerCase().trim(); });
+    if (checkBtn) checkBtn.disabled = true;
+    var userAnswer = normalizeAnswer(input.value);
+    var acceptedAnswers = q.a.map(function(ans) { return normalizeAnswer(ans); });
     var isCorrect = acceptedAnswers.indexOf(userAnswer) !== -1;
     var timeTaken = Math.round((Date.now() - questionStartTime) / 1000);
     
@@ -1384,27 +1390,28 @@ function showResult(exerciseDiv, isCorrect, message) {
     exerciseDiv.appendChild(nextBtn);
 }
 
+function showMain() {
+    document.getElementById('exercises').innerHTML = '';
+    document.getElementById('topicsList').innerHTML = '';
+    document.getElementById('mainNav').className = 'main-nav';
+    document.getElementById('backBtn').className = 'back-btn hidden';
+    currentSection = '';
+    currentTopic = '';
+    navigationHistory = [];
+}
+
 function goBack() {
     if (navigationHistory.length === 0) {
-        window.location.reload();
+        showMain();
         return;
     }
 
     var prev = navigationHistory.pop();
-    var exercises = document.getElementById('exercises');
-    var topicsList = document.getElementById('topicsList');
-    var mainNav = document.getElementById('mainNav');
-
-    exercises.innerHTML = '';
-    topicsList.innerHTML = '';
 
     if (prev === 'main') {
-        mainNav.className = 'main-nav';
-        document.getElementById('backBtn').className = 'back-btn hidden';
-        currentSection = '';
-        currentTopic = '';
+        showMain();
     } else if (content[prev]) {
-        showSection(prev);
+        showSection(prev, true);
     }
 }
 
