@@ -405,7 +405,7 @@ function handleFillBlankAnswer(exerciseDiv, q, input, checkBtn) {
 
     if (isCorrect) {
         input.classList.add('correct');
-        showResult(exerciseDiv, true, 'Отлично! Правильно!');
+        showResult(exerciseDiv, true, 'Правильно.');
     } else {
         input.classList.add('wrong');
         showResult(exerciseDiv, false, 'Неправильно. Правильный ответ: ' + q.a[0]);
