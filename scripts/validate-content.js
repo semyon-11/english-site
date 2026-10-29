@@ -39,8 +39,8 @@ function validateProjectData(projectData, rootDir = path.resolve(__dirname, '..'
         if (!exists) report(location, 'файл images/' + name + ' не найден');
     }
 
-    function checkOptions(question, location, needsAudio) {
-        if (!isText(question.q)) report(location, 'отсутствует текст вопроса');
+    function checkOptions(question, location, needsAudio, needsQuestion) {
+        if (needsQuestion && !isText(question.q)) report(location, 'отсутствует текст вопроса');
         if (!Array.isArray(question.options) || question.options.length < 2 ||
             !question.options.every(isText)) {
             report(location, 'нужно не менее двух непустых вариантов ответа');
@@ -144,12 +144,12 @@ function validateProjectData(projectData, rootDir = path.resolve(__dirname, '..'
                     }
 
                     if (exercise.type === 'multipleChoice' || exercise.type === 'imageChoice') {
-                        checkOptions(question, questionLocation, false);
+                        checkOptions(question, questionLocation, false, true);
                         if (exercise.type === 'imageChoice' && !question.image) {
                             report(questionLocation, 'для imageChoice нужно изображение');
                         }
                     } else if (exercise.type === 'audio') {
-                        checkOptions(question, questionLocation, true);
+                        checkOptions(question, questionLocation, true, false);
                     } else if (exercise.type === 'emojiChoice') {
                         checkOptions(question, questionLocation, false);
                         if (!isText(question.emoji)) report(questionLocation, 'нет эмодзи');
