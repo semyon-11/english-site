@@ -143,7 +143,9 @@ test('Тоби перемещается между страницами и об�
 });
 
 test('анимации Тоби учитывают настройку уменьшенного движения', function() {
-    const css = fs.readFileSync(path.join(rootDir, 'css', 'spring-oasis.css'), 'utf8');
+    const css = ['mascot.css', 'motion.css', 'responsive.css'].map(function(file) {
+        return fs.readFileSync(path.join(rootDir, 'css', file), 'utf8');
+    }).join('\n');
 
     assert.ok(css.includes('@keyframes toby-idle'));
     assert.ok(css.includes('@keyframes toby-hop'));
