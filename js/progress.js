@@ -1,58 +1,90 @@
-function getStudentName() {
-    var name = localStorage.getItem('studentName');
-    if (!name) {
-        document.getElementById('nameModal').classList.remove('hidden');
-        return null;
+function showStorageWarning(message) {
+    var warning = document.getElementById('storageWarning');
+    if (warning) {
+        warning.textContent = message || 'Браузер не разрешает сохранять данные. Приложением можно пользоваться, но прогресс не будет записываться.';
     }
-    return name;
+}
+
+function getStudentName() {
+    if (studentName) return studentName;
+
+    try {
+        var savedName = localStorage.getItem('studentName');
+        if (savedName) {
+            studentName = savedName;
+            return studentName;
+        }
+    } catch (error) {
+        showStorageWarning();
+    }
+
+    var modal = document.getElementById('nameModal');
+    if (modal) modal.classList.remove('hidden');
+    return null;
 }
 
 function saveName() {
     var nameInput = document.getElementById('studentName');
     var name = nameInput.value.trim();
-    if (name) {
-        studentName = name;
-        localStorage.setItem('studentName', name);
-        document.getElementById('nameModal').classList.add('hidden');
-    } else {
-        alert('Пожалуйста, введите имя');
+    var errorMessage = document.getElementById('nameError');
+
+    if (!name) {
+        if (errorMessage) errorMessage.textContent = 'Введите имя, чтобы продолжить.';
+        nameInput.focus();
+        return;
     }
+
+    studentName = name;
+    if (errorMessage) errorMessage.textContent = '';
+
+    try {
+        localStorage.setItem('studentName', name);
+    } catch (error) {
+        showStorageWarning();
+    }
+
+    document.getElementById('nameModal').classList.add('hidden');
 }
 
 function saveProgress(topic, exerciseType, isCorrect, timeTaken) {
     if (!studentName) {
-        studentName = localStorage.getItem('studentName');
+        try {
+            studentName = localStorage.getItem('studentName') || '';
+        } catch (error) {
+            showStorageWarning();
+            return false;
+        }
     }
-    if (!studentName) return;
-    
-    if (!topic) {
-        topic = currentTopic;
+    if (!studentName || !topic || !exerciseType) return false;
+
+    try {
+        var progress = getProgress();
+        progress.push({
+            name: studentName,
+            topic: topic,
+            exerciseType: exerciseType,
+            isCorrect: Boolean(isCorrect),
+            timestamp: new Date().toISOString(),
+            timeTaken: Math.max(0, Number(timeTaken) || 0)
+        });
+        localStorage.setItem('progress', JSON.stringify(progress));
+        return true;
+    } catch (error) {
+        showStorageWarning();
+        return false;
     }
-    if (!topic) return;
-    
-    var progress = getProgress();
-    var now = new Date();
-    var dateStr = now.toLocaleDateString('ru-RU');
-    var timeStr = now.toLocaleTimeString('ru-RU');
-    
-    progress.push({
-        name: studentName,
-        topic: topic,
-        exerciseType: exerciseType,
-        isCorrect: isCorrect,
-        date: dateStr,
-        time: timeStr,
-        timeTaken: timeTaken
-    });
-    
-    localStorage.setItem('progress', JSON.stringify(progress));
 }
 
 function getProgress() {
     try {
         var savedProgress = JSON.parse(localStorage.getItem('progress') || '[]');
-        return Array.isArray(savedProgress) ? savedProgress : [];
+        return Array.isArray(savedProgress)
+            ? savedProgress.filter(function(item) {
+                return item && typeof item === 'object';
+            })
+            : [];
     } catch (error) {
+        showStorageWarning();
         return [];
     }
 }
@@ -60,12 +92,17 @@ function getProgress() {
 function showProgress() {
     var name = getStudentName();
     if (!name) return;
+
     studentName = name;
+    navigationHistory = [];
+    currentSection = '';
+    currentTopic = '';
 
     var progress = getProgress();
     var exercises = document.getElementById('exercises');
     var topicsList = document.getElementById('topicsList');
     var mainNav = document.getElementById('mainNav');
+
     mainNav.className = 'main-nav hidden';
     exercises.innerHTML = '';
     topicsList.innerHTML = '';
@@ -85,6 +122,7 @@ function showProgress() {
     exercises.appendChild(greeting);
 
     var hasAnyProgress = false;
+
     Object.keys(content).forEach(function(sectionKey) {
         var topics = content[sectionKey];
         var sectionDiv = document.createElement('div');
@@ -100,14 +138,20 @@ function showProgress() {
         var hasTopicsInSection = false;
 
         Object.keys(topics).forEach(function(topicKey) {
-            var topicProgress = progress.filter(function(item) { return item.topic === topicKey; });
+            var topicProgress = progress.filter(function(item) {
+                return item.topic === topicKey;
+            });
             var total = topicProgress.length;
             if (total === 0) return;
+
             hasAnyProgress = true;
             hasTopicsInSection = true;
 
-            var correct = topicProgress.filter(function(item) { return item.isCorrect; }).length;
+            var correct = topicProgress.filter(function(item) {
+                return item.isCorrect;
+            }).length;
             var incorrect = total - correct;
+
             var card = document.createElement('div');
             card.className = 'stat-card';
 
@@ -129,6 +173,7 @@ function showProgress() {
             incorrectLine.className = 'progress-incorrect';
             incorrectLine.textContent = 'Неправильных: ' + incorrect;
             card.appendChild(incorrectLine);
+
             statsDiv.appendChild(card);
         });
 

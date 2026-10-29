@@ -454,3 +454,74 @@ header p {
 .progress-correct { color: #28a745; font-weight: bold; }
 .progress-incorrect { color: #dc3545; font-weight: bold; }
 .progress-empty { text-align: center; font-size: 1.2em; color: #666; }
+
+
+/* Keyboard and assistive-technology support */
+button,
+input {
+    font-family: inherit;
+}
+
+button:focus-visible,
+input:focus-visible {
+    outline: 3px solid #243fbd;
+    outline-offset: 3px;
+}
+
+.matching-item {
+    font: inherit;
+    width: 100%;
+}
+
+.matching-item:disabled {
+    cursor: default;
+    opacity: 0.85;
+}
+
+.nav-btn--progress {
+    background-color: #28a745;
+}
+
+.nav-btn--progress:hover {
+    background-color: #218838;
+}
+
+.form-message,
+.storage-warning {
+    color: #8a2d2d;
+    font-size: 0.95em;
+    margin: 8px 0;
+}
+
+.storage-warning:empty,
+.form-message:empty {
+    display: none;
+}
+
+.modal-content label {
+    display: block;
+    text-align: left;
+    font-weight: bold;
+    margin: 8px 0 4px;
+}
+
+.modal-content .fill-input {
+    width: 100%;
+    margin: 4px 0 10px;
+}
+
+.modal-content .nav-btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}

@@ -415,13 +415,6 @@ const content = {
 };
 
 const allLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-const letterWords = {
-    'A': 'apple', 'B': 'ball', 'C': 'cat', 'D': 'dog', 'E': 'egg',
-    'F': 'frog', 'G': 'girl', 'H': 'hat', 'I': 'ice cream', 'J': 'jam',
-    'K': 'kite', 'L': 'lion', 'M': 'mouse', 'N': 'nose', 'O': 'orange',
-    'P': 'pig', 'Q': 'queen', 'R': 'rabbit', 'S': 'sun', 'T': 'tree',
-    'U': 'umbrella', 'V': 'van', 'W': 'window', 'X': 'fox', 'Y': 'yellow', 'Z': 'zoo'
-};
 const blendWords = {
     'sh': 'ship',
     'ch': 'cheese',

@@ -1,3 +1,22 @@
+function createExerciseImage(imageName) {
+    var img = document.createElement('img');
+    img.className = 'exercise-image';
+    img.src = 'images/' + imageName + '.png';
+    img.alt = 'Иллюстрация к заданию';
+    img.width = 200;
+    img.height = 200;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.onerror = function() {
+        this.style.display = 'none';
+        var placeholder = document.createElement('div');
+        placeholder.className = 'image-placeholder';
+        placeholder.textContent = 'Картинка не загрузилась';
+        this.parentNode.insertBefore(placeholder, this);
+    };
+    return img;
+}
+
 function renderExercise(exercise, container) {
     var exerciseDiv = document.createElement('div');
     exerciseDiv.className = 'exercise-container';
@@ -18,18 +37,7 @@ function renderExercise(exercise, container) {
         qDiv.className = 'exercise-item';
 
         if (q.image) {
-            var img = document.createElement('img');
-            img.className = 'exercise-image';
-            img.src = 'images/' + q.image + '.png';
-            img.alt = 'Картинка к заданию';
-            img.onerror = function() {
-                this.style.display = 'none';
-                var placeholder = document.createElement('div');
-                placeholder.className = 'image-placeholder';
-                placeholder.textContent = 'Картинка не загрузилась';
-                this.parentNode.insertBefore(placeholder, this);
-            };
-            qDiv.appendChild(img);
+            qDiv.appendChild(createExerciseImage(q.image));
         }
 
         var qTitle = document.createElement('div');
@@ -69,18 +77,7 @@ function renderExercise(exercise, container) {
         var qDiv = document.createElement('div');
         qDiv.className = 'exercise-item';
 
-        var img = document.createElement('img');
-        img.className = 'exercise-image';
-        img.src = 'images/' + q.image + '.png';
-        img.alt = 'Картинка к заданию';
-        img.onerror = function() {
-            this.style.display = 'none';
-            var placeholder = document.createElement('div');
-            placeholder.className = 'image-placeholder';
-            placeholder.textContent = 'Картинка не загрузилась';
-            this.parentNode.insertBefore(placeholder, this);
-        };
-        qDiv.appendChild(img);
+        qDiv.appendChild(createExerciseImage(q.image));
 
         var qTitle = document.createElement('div');
         qTitle.className = 'exercise-question';
@@ -186,18 +183,7 @@ function renderExercise(exercise, container) {
         qTitle.textContent = 'Посмотрите на картинку и напишите слово:';
         qDiv.appendChild(qTitle);
 
-        var img = document.createElement('img');
-        img.className = 'exercise-image';
-        img.src = 'images/' + q.image + '.png';
-        img.alt = 'Картинка к заданию';
-        img.onerror = function() {
-            this.style.display = 'none';
-            var placeholder = document.createElement('div');
-            placeholder.className = 'image-placeholder';
-            placeholder.textContent = 'Картинка не загрузилась';
-            this.parentNode.insertBefore(placeholder, this);
-        };
-        qDiv.appendChild(img);
+        qDiv.appendChild(createExerciseImage(q.image));
 
         var input = document.createElement('input');
         input.type = 'text';
@@ -211,81 +197,102 @@ function renderExercise(exercise, container) {
 
         var leftColumn = document.createElement('div');
         var rightColumn = document.createElement('div');
+        var feedback = document.createElement('p');
+        feedback.className = 'matching-feedback';
+        feedback.setAttribute('role', 'status');
+        feedback.setAttribute('aria-live', 'polite');
 
         var pairs = exercise.pairs;
         var rightItems = exercise.shuffledRight || shuffleArray(pairs);
+        var matchedPairs = 0;
+        var selectedLeft = null;
+        var selectedRight = null;
+
+        function clearSelection(item) {
+            if (!item) return;
+            item.classList.remove('selected', 'wrong');
+            item.setAttribute('aria-pressed', 'false');
+        }
+
+        function selectMatchingItem(item, side) {
+            if (item.disabled) return;
+
+            if (side === 'left') {
+                if (selectedLeft && selectedLeft !== item) clearSelection(selectedLeft);
+                selectedLeft = item;
+            } else {
+                if (selectedRight && selectedRight !== item) clearSelection(selectedRight);
+                selectedRight = item;
+            }
+
+            item.classList.add('selected');
+            item.setAttribute('aria-pressed', 'true');
+            if (!selectedLeft || !selectedRight) return;
+
+            var isCorrect = selectedLeft.getAttribute('data-pair') === selectedRight.getAttribute('data-pair');
+            if (isCorrect) {
+                selectedLeft.classList.add('matched');
+                selectedRight.classList.add('matched');
+                selectedLeft.disabled = true;
+                selectedRight.disabled = true;
+                selectedLeft.setAttribute('aria-pressed', 'true');
+                selectedRight.setAttribute('aria-pressed', 'true');
+                matchedPairs += 1;
+                feedback.textContent = 'Пара найдена.';
+
+                if (matchedPairs === pairs.length) {
+                    var timeTaken = Math.round((Date.now() - questionStartTime) / 1000);
+                    saveProgress(currentTopic, currentExerciseData.original.type, true, timeTaken);
+                    showResult(exerciseDiv, true, 'Отлично! Все пары найдены!');
+                }
+            } else {
+                feedback.textContent = 'Это не пара. Попробуйте ещё раз.';
+                selectedLeft.classList.add('wrong');
+                selectedRight.classList.add('wrong');
+
+                var previousLeft = selectedLeft;
+                var previousRight = selectedRight;
+                window.setTimeout(function() {
+                    clearSelection(previousLeft);
+                    clearSelection(previousRight);
+                }, 600);
+            }
+
+            selectedLeft = null;
+            selectedRight = null;
+        }
 
         pairs.forEach(function(pair, index) {
-            var leftItem = document.createElement('div');
+            var leftItem = document.createElement('button');
+            leftItem.type = 'button';
             leftItem.className = 'matching-item';
             leftItem.textContent = pair.left;
             leftItem.setAttribute('data-pair', index);
-            leftItem.setAttribute('data-side', 'left');
+            leftItem.setAttribute('aria-pressed', 'false');
+            leftItem.addEventListener('click', function() {
+                selectMatchingItem(leftItem, 'left');
+            });
             leftColumn.appendChild(leftItem);
         });
 
         rightItems.forEach(function(pair) {
             var originalIndex = pairs.indexOf(pair);
-            var rightItem = document.createElement('div');
+            var rightItem = document.createElement('button');
+            rightItem.type = 'button';
             rightItem.className = 'matching-item';
             rightItem.textContent = pair.right;
             rightItem.setAttribute('data-pair', originalIndex);
-            rightItem.setAttribute('data-side', 'right');
+            rightItem.setAttribute('aria-pressed', 'false');
+            rightItem.addEventListener('click', function() {
+                selectMatchingItem(rightItem, 'right');
+            });
             rightColumn.appendChild(rightItem);
         });
 
         matchingContainer.appendChild(leftColumn);
         matchingContainer.appendChild(rightColumn);
         exerciseDiv.appendChild(matchingContainer);
-
-        var matchedPairs = 0;
-        var selectedLeft = null;
-        var selectedRight = null;
-
-        setTimeout(function() {
-            var items = matchingContainer.querySelectorAll('.matching-item');
-            items.forEach(function(item) {
-                item.onclick = function() {
-                    if (this.classList.contains('matched')) return;
-
-                    if (this.getAttribute('data-side') === 'left') {
-                        if (selectedLeft) selectedLeft.classList.remove('selected');
-                        selectedLeft = this;
-                        this.classList.add('selected');
-                    } else {
-                        if (selectedRight) selectedRight.classList.remove('selected');
-                        selectedRight = this;
-                        this.classList.add('selected');
-                    }
-
-                    if (selectedLeft && selectedRight) {
-                        if (selectedLeft.getAttribute('data-pair') === selectedRight.getAttribute('data-pair')) {
-                            selectedLeft.classList.add('matched');
-                            selectedRight.classList.add('matched');
-                            matchedPairs++;
-
-                            if (matchedPairs === pairs.length) {
-                                var timeTaken = Math.round((Date.now() - questionStartTime) / 1000);
-                                saveProgress(currentTopic, 'matching', true, timeTaken);
-                                showResult(exerciseDiv, true, 'Отлично! Все пары найдены!');
-                            }
-                        } else {
-                            selectedLeft.classList.add('wrong');
-                            selectedRight.classList.add('wrong');
-                            var sl = selectedLeft;
-                            var sr = selectedRight;
-                            setTimeout(function() {
-                                sl.classList.remove('selected', 'wrong');
-                                sr.classList.remove('selected', 'wrong');
-                            }, 600);
-                        }
-
-                        selectedLeft = null;
-                        selectedRight = null;
-                    }
-                };
-            });
-        }, 100);
+        exerciseDiv.appendChild(feedback);
     } else if (exercise.type === 'audio') {
         var exIdx = currentExerciseData.index;
         var qIndex = getNextUnusedQuestion(exercise, exIdx);
@@ -345,7 +352,7 @@ function handleMultipleChoiceAnswer(exerciseDiv, q, selectedOptIndex, selectedLa
 
     var isCorrect = selectedOptIndex === q.a;
     var timeTaken = Math.round((Date.now() - questionStartTime) / 1000);
-    saveProgress(currentTopic, 'multipleChoice', isCorrect, timeTaken);
+    saveProgress(currentTopic, currentExerciseData.original.type, isCorrect, timeTaken);
 
     if (isCorrect) {
         selectedLabel.classList.add('correct-answer');
@@ -391,7 +398,7 @@ function handleFillBlankAnswer(exerciseDiv, q, input, checkBtn) {
     var isCorrect = acceptedAnswers.indexOf(userAnswer) !== -1;
     var timeTaken = Math.round((Date.now() - questionStartTime) / 1000);
     
-    saveProgress(currentTopic, 'fillBlank', isCorrect, timeTaken);
+    saveProgress(currentTopic, currentExerciseData.original.type, isCorrect, timeTaken);
 
     if (isCorrect) {
         input.classList.add('correct');
@@ -411,6 +418,8 @@ function showResult(exerciseDiv, isCorrect, message) {
 
     var result = document.createElement('div');
     result.className = 'result ' + (isCorrect ? 'correct' : 'incorrect');
+    result.setAttribute('role', 'status');
+    result.setAttribute('aria-live', 'polite');
     result.textContent = message;
     exerciseDiv.appendChild(result);
 

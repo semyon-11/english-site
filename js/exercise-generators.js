@@ -1,13 +1,27 @@
 function generateCaseMatchingExercise() {
-    var shuffled = shuffleArray(allLetters);
-    var selected = shuffled.slice(0, 7);
-    var pairs = selected.map(function(l) { return { left: l, right: l.toLowerCase() }; });
-    var shuffledRight = shuffleArray(pairs);
+    var available = allLetters.filter(function(letter) {
+        return usedMatchingLetters.indexOf(letter) === -1;
+    });
+
+    if (available.length === 0) {
+        usedMatchingLetters = [];
+        available = allLetters.slice();
+    }
+
+    var selected = shuffleArray(available).slice(0, Math.min(7, available.length));
+    selected.forEach(function(letter) {
+        usedMatchingLetters.push(letter);
+    });
+
+    var pairs = selected.map(function(letter) {
+        return { left: letter, right: letter.toLowerCase() };
+    });
+
     return {
         type: 'matching',
         instruction: 'Соедините заглавные и строчные буквы',
         pairs: pairs,
-        shuffledRight: shuffledRight
+        shuffledRight: shuffleArray(pairs)
     };
 }
 

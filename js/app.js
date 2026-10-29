@@ -1,7 +1,12 @@
 function showSection(section, fromBack) {
     if (!getStudentName()) return;
+
+    var topics = content[section];
+    if (!topics) return;
+
     if (!fromBack) navigationHistory.push('main');
     currentSection = section;
+
     var topicsList = document.getElementById('topicsList');
     var exercises = document.getElementById('exercises');
     var mainNav = document.getElementById('mainNav');
@@ -12,29 +17,30 @@ function showSection(section, fromBack) {
 
     var sectionTitle = document.createElement('h2');
     sectionTitle.className = 'exercise-title';
-    sectionTitle.textContent = sectionNames[section];
+    sectionTitle.textContent = sectionNames[section] || section;
     topicsList.appendChild(sectionTitle);
 
-    var topics = content[section];
-    for (var topic in topics) {
-        if (topics.hasOwnProperty(topic)) {
-            var btn = document.createElement('button');
-            btn.className = 'topic-btn';
-            btn.textContent = topics[topic].title;
-            btn.setAttribute('data-topic', topic);
-            btn.onclick = function() {
-                var t = this.getAttribute('data-topic');
-                showTopic(t);
-            };
-            topicsList.appendChild(btn);
-        }
-    }
+    Object.keys(topics).forEach(function(topic) {
+        var button = document.createElement('button');
+        button.className = 'topic-btn';
+        button.type = 'button';
+        button.textContent = topics[topic].title;
+        button.setAttribute('data-topic', topic);
+        button.addEventListener('click', function() {
+            showTopic(topic);
+        });
+        topicsList.appendChild(button);
+    });
 
-    document.getElementById('backBtn').textContent = 'К списку разделов';
-    document.getElementById('backBtn').className = 'back-btn';
+    var backBtn = document.getElementById('backBtn');
+    backBtn.textContent = 'К списку разделов';
+    backBtn.className = 'back-btn';
 }
 
 function showTopic(topic) {
+    var topics = content[currentSection];
+    if (!topics || !topics[topic]) return;
+
     navigationHistory.push(currentSection);
     currentTopic = topic;
     usedExercisesInCycle = [];
@@ -42,20 +48,19 @@ function showTopic(topic) {
     usedAudioLetters = [];
     usedAudioBlends = [];
     usedAudioSounds = [];
+    usedMatchingLetters = [];
 
-    var topicsList = document.getElementById('topicsList');
-    var exercises = document.getElementById('exercises');
-
-    topicsList.innerHTML = '';
-    exercises.innerHTML = '';
-
+    document.getElementById('topicsList').innerHTML = '';
+    document.getElementById('exercises').innerHTML = '';
     document.getElementById('backBtn').textContent = 'К списку тем';
 
     showNextExercise();
 }
 
 function showNextExercise() {
-    var topicData = content[currentSection][currentTopic];
+    var topicData = content[currentSection] && content[currentSection][currentTopic];
+    if (!topicData || !Array.isArray(topicData.exercises) || topicData.exercises.length === 0) return;
+
     var exercises = document.getElementById('exercises');
     exercises.innerHTML = '';
 
@@ -63,15 +68,12 @@ function showNextExercise() {
         usedExercisesInCycle = [];
     }
 
-    var allIndices = [];
-    for (var i = 0; i < topicData.exercises.length; i++) {
-        allIndices.push(i);
-    }
-
-    var availableIndices = allIndices.filter(function(idx) {
-        return usedExercisesInCycle.indexOf(idx) === -1;
+    var allIndices = topicData.exercises.map(function(_, index) {
+        return index;
     });
-
+    var availableIndices = allIndices.filter(function(index) {
+        return usedExercisesInCycle.indexOf(index) === -1;
+    });
     var randomIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
     usedExercisesInCycle.push(randomIndex);
 
@@ -88,7 +90,11 @@ function showNextExercise() {
         exerciseToRender = generateAudioSoundsExercise();
     }
 
-    currentExerciseData = { original: exercise, rendered: exerciseToRender, index: randomIndex };
+    currentExerciseData = {
+        original: exercise,
+        rendered: exerciseToRender,
+        index: randomIndex
+    };
 
     var topicTitle = document.createElement('h2');
     topicTitle.className = 'exercise-title';
@@ -115,23 +121,46 @@ function goBack() {
         return;
     }
 
-    var prev = navigationHistory.pop();
-
-    if (prev === 'main') {
+    var previous = navigationHistory.pop();
+    if (previous === 'main') {
         showMain();
-    } else if (content[prev]) {
-        showSection(prev, true);
+    } else if (content[previous]) {
+        showSection(previous, true);
+    } else {
+        showMain();
     }
 }
 
-window.onload = function() {
-    document.getElementById('mainNav').className = 'main-nav';
-    document.getElementById('backBtn').className = 'back-btn hidden';
+function initializeApp() {
+    var mainNav = document.getElementById('mainNav');
+    mainNav.addEventListener('click', function(event) {
+        var button = event.target.closest('[data-action]');
+        if (!button) return;
+
+        var action = button.getAttribute('data-action');
+        if (action === 'progress') {
+            showProgress();
+        } else {
+            showSection(action);
+        }
+    });
+
+    document.getElementById('backBtn').addEventListener('click', goBack);
+    document.getElementById('nameForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        saveName();
+    });
+
     initSpeech();
-    
-    if (!localStorage.getItem('studentName')) {
+
+    if (!getStudentName()) {
         document.getElementById('nameModal').classList.remove('hidden');
-    } else {
-        studentName = localStorage.getItem('studentName');
+        document.getElementById('studentName').focus();
     }
-};
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeApp);
+} else {
+    initializeApp();
+}

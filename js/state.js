@@ -7,6 +7,6 @@ let currentExerciseData = null;
 let usedAudioLetters = [];
 let usedAudioBlends = [];
 let usedAudioSounds = [];
-let speechReady = false;
+let usedMatchingLetters = [];
 let studentName = '';
 let questionStartTime = null;

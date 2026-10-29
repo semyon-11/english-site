@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Интерактивный тренажёр английского языка для учеников начальной школы.">
     <title>English for Kids</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -13,25 +14,41 @@
             <p>Учим английский — 2 класс</p>
         </header>
 
-    <nav class="main-nav" id="mainNav">
-        <button class="nav-btn" onclick="showSection('grammar')">Грамматика</button>
-        <button class="nav-btn" onclick="showSection('reading')">Чтение</button>
-        <button class="nav-btn" onclick="showSection('vocabulary')">Лексика</button>
-        <button class="nav-btn" onclick="showProgress()" style="background-color: #28a745;">Мой прогресс</button>
-    </nav>
+        <nav class="main-nav" id="mainNav" aria-label="Основная навигация">
+            <button class="nav-btn" type="button" data-action="grammar">Грамматика</button>
+            <button class="nav-btn" type="button" data-action="reading">Чтение</button>
+            <button class="nav-btn" type="button" data-action="vocabulary">Лексика</button>
+            <button class="nav-btn nav-btn--progress" type="button" data-action="progress">Мой прогресс</button>
+        </nav>
 
-    <div id="nameModal" class="modal hidden">
-        <div class="modal-content">
-            <h2>Добро пожаловать!</h2>
-            <p>Введите ваше имя:</p>
-            <input type="text" id="studentName" class="fill-input" placeholder="Ваше имя" style="width: 100%; margin: 10px 0;">
-            <button class="nav-btn" onclick="saveName()" style="width: 100%;">Начать обучение</button>
+        <div id="nameModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="nameModalTitle">
+            <form id="nameForm" class="modal-content">
+                <h2 id="nameModalTitle">Добро пожаловать!</h2>
+                <p>Введите ваше имя:</p>
+                <label for="studentName">Имя ученика</label>
+                <input
+                    type="text"
+                    id="studentName"
+                    name="studentName"
+                    class="fill-input"
+                    placeholder="Ваше имя"
+                    autocomplete="given-name"
+                    maxlength="40"
+                    required
+                    aria-describedby="nameError"
+                >
+                <p id="nameError" class="form-message" role="status" aria-live="polite"></p>
+                <button class="nav-btn" type="submit">Начать обучение</button>
+            </form>
         </div>
-    </div>
 
-        <div id="topicsList" class="topics-list"></div>
-        <div id="exercises" class="exercises"></div>
-        <button id="backBtn" class="back-btn hidden" onclick="goBack()">Назад</button>
+        <p id="storageWarning" class="storage-warning" role="status" aria-live="polite"></p>
+
+        <main id="mainContent">
+            <div id="topicsList" class="topics-list"></div>
+            <div id="exercises" class="exercises"></div>
+            <button id="backBtn" class="back-btn hidden" type="button">Назад</button>
+        </main>
     </div>
 
     <script src="js/content.js"></script>
