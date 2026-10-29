@@ -1079,3 +1079,138 @@ body {
         font-size: .94rem;
     }
 }
+
+
+.container {
+    width: min(100%, 1280px);
+    max-width: 1280px;
+    margin-inline: auto;
+}
+
+.site-header,
+.main-nav,
+#mainContent,
+#mainContent > .topics-list,
+#mainContent > .exercises {
+    width: 100%;
+    min-width: 0;
+}
+
+.main-nav {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(10px, 1.25vw, 18px);
+    padding-right: 0;
+    margin-inline: 0;
+}
+
+#mainContent > .topics-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+}
+
+#mainContent > .exercises {
+    min-width: 0;
+}
+
+.progress-greeting {
+    display: flex;
+    min-height: 76px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    margin: 0 0 28px;
+    padding: 16px 22px;
+    border: 2px solid #A8D4C2;
+    border-radius: 18px;
+    background: #E4F3EB;
+    color: #164B43;
+    font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+    font-weight: 850;
+    line-height: 1.25;
+    text-align: center;
+}
+
+.progress-greeting strong {
+    color: #123E36;
+    font-size: 1.08em;
+    font-weight: 900;
+    overflow-wrap: anywhere;
+}
+
+button,
+.option-label {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:active,
+.option-label:active {
+    transform: scale(.965);
+}
+
+button.is-pressed,
+.option-label.is-pressed {
+    animation: tap-press .24s var(--ease);
+}
+
+@keyframes tap-press {
+    0% { transform: scale(1); }
+    38% { transform: scale(.94); }
+    72% { transform: scale(1.025); }
+    100% { transform: scale(1); }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .nav-btn:active,
+    .topic-btn:active,
+    .next-btn:active,
+    .check-btn:active,
+    .audio-btn:active,
+    .back-btn:active,
+    .matching-item:active,
+    .option-label:active {
+        transform: scale(.96);
+        filter: brightness(.96);
+    }
+
+    button.is-pressed,
+    .option-label.is-pressed {
+        animation: tap-press .24s var(--ease);
+    }
+}
+
+@media (max-width: 900px) {
+    .container {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .main-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 620px) {
+    .main-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding-right: 0;
+    }
+
+    #mainContent > .topics-list {
+        grid-template-columns: 1fr;
+    }
+
+    .progress-greeting {
+        min-height: 66px;
+        gap: 5px 9px;
+        padding: 13px 14px;
+        font-size: 1.28rem;
+    }
+}
+
+@media (max-width: 370px) {
+    .progress-greeting {
+        font-size: 1.12rem;
+    }
+}
