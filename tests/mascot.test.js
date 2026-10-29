@@ -46,7 +46,7 @@ test('маскот подключён в шапке и используется 
 
     assert.ok(html.includes('images/favicon.svg'));
     assert.ok(html.includes('images/mascot.svg'));
-    assert.ok(mascot.includes('viewBox="0 0 360 400"'));
+    assert.ok(mascot.includes('viewBox="0 0 420 455"'));
     assert.ok(favicon.includes('viewBox="0 0 128 128"'));
 });
 
@@ -62,14 +62,14 @@ test('маскот меняет реакцию и сообщение, не со�
     assert.ok(feedback);
     assert.ok(feedback.className.includes('is-correct'));
     assert.equal(feedback.querySelector('.mascot-feedback-message').textContent, 'Отличная работа!');
-    assert.equal(feedback.querySelector('.mascot-feedback-image').alt, 'Тото радуется');
+    assert.equal(feedback.querySelector('.mascot-feedback-image').alt, 'Тоби радуется');
 
     context.__showMascotFeedback(container, false, 'Ошибки помогают учиться!');
     feedback = container.querySelector('.mascot-feedback');
     assert.equal(container.children.length, 1);
     assert.ok(feedback.className.includes('is-incorrect'));
     assert.equal(feedback.querySelector('.mascot-feedback-message').textContent, 'Ошибки помогают учиться!');
-    assert.equal(feedback.querySelector('.mascot-feedback-image').alt, 'Тото поддерживает ученика');
+    assert.equal(feedback.querySelector('.mascot-feedback-image').alt, 'Тоби поддерживает ученика');
 });
 
 
