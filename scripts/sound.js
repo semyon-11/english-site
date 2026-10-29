@@ -54,16 +54,16 @@
     }
 
     function playClickSound() {
-        playTone(520, 0, 0.055, 0.035, 0.11);
+        playTone(520, 0, 0.055, 0.10, 0.22);
     }
 
     function playAnswerSound(isCorrect) {
         if (isCorrect) {
-            playTone(660, 0, 0.075, 0.05, 0.13);
-            playTone(880, 0.075, 0.095, 0.055, 0.14);
+            playTone(660, 0, 0.075, 0.12, 0.25);
+            playTone(880, 0.075, 0.095, 0.13, 0.27);
         } else {
-            playTone(330, 0, 0.065, 0.045, 0.12);
-            playTone(262, 0.065, 0.08, 0.04, 0.11);
+            playTone(330, 0, 0.065, 0.11, 0.24);
+            playTone(262, 0.065, 0.08, 0.10, 0.23);
         }
     }
 

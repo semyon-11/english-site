@@ -3,7 +3,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 
 function loadProjectData(rootDir = path.resolve(__dirname, '..')) {
-    const sourcePath = path.join(rootDir, 'js', 'content.js');
+    const sourcePath = path.join(rootDir, 'scripts', 'content.js');
     const source = fs.readFileSync(sourcePath, 'utf8');
     const sandbox = {};
     vm.runInNewContext(source + '\nglobalThis.__projectData = { content, allLetters, blendWords, soundWords, sectionNames };', sandbox, {
