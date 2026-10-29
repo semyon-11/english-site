@@ -137,7 +137,7 @@ test('касание добавляет класс анимации и запу�
 });
 
 test('шапка, меню и разделы выровнены по общей сетке', function() {
-    const css = read('css/spring-oasis.css');
+    const css = ['css/style.css', 'css/foundation.css', 'css/layout.css', 'css/components.css', 'css/mascot.css', 'css/motion.css', 'css/responsive.css'].map(read).join('\n');
     const html = read('index.html');
     const progress = read('js/progress.js');
 

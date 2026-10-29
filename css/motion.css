@@ -1,0 +1,59 @@
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+@keyframes page-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+@keyframes card-in { from { opacity: 0; transform: translateY(10px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+@keyframes image-in { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: scale(1); } }
+
+@keyframes modal-in { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+@keyframes speech-in { from { opacity: 0; transform: translateY(7px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+@keyframes toby-idle {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    42% { transform: translateY(-7px) rotate(-2deg); }
+    72% { transform: translateY(-2px) rotate(1.5deg); }
+}
+
+@keyframes toby-hop {
+    0% { transform: translateY(13px) rotate(5deg) scale(.96); }
+    48% { transform: translateY(-13px) rotate(-5deg) scale(1.03); }
+    76% { transform: translateY(3px) rotate(2deg); }
+    100% { transform: translateY(0) rotate(0) scale(1); }
+}
+
+@keyframes toby-celebrate {
+    0%, 100% { transform: translateY(0) rotate(0) scale(1); }
+    22% { transform: translateY(-17px) rotate(-11deg) scale(1.05); }
+    44% { transform: translateY(-4px) rotate(10deg) scale(1.02); }
+    66% { transform: translateY(-13px) rotate(-7deg) scale(1.04); }
+    84% { transform: translateY(0) rotate(4deg); }
+}
+
+@keyframes toby-encourage {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    28% { transform: translateY(-5px) rotate(-8deg); }
+    58% { transform: translateY(1px) rotate(7deg); }
+    82% { transform: translateY(-2px) rotate(-3deg); }
+}
+
+@keyframes nudge {
+    0%, 100% { transform: translateX(0); }
+    35% { transform: translateX(-4px); }
+    70% { transform: translateX(4px); }
+}
+
+@keyframes tap-press {
+    0% { transform: scale(1); }
+    38% { transform: scale(.94); }
+    72% { transform: scale(1.025); }
+    100% { transform: scale(1); }
+}
+
+@keyframes tap-press {
+    0% { transform: scale(1); }
+    38% { transform: scale(.94); }
+    72% { transform: scale(1.025); }
+    100% { transform: scale(1); }
+}
