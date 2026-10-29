@@ -21,6 +21,7 @@ function renderExercise(exercise, container) {
     var exerciseDiv = document.createElement('div');
     exerciseDiv.className = 'exercise-container';
     exerciseDiv.setAttribute('data-exercise', currentExerciseData.index);
+    mountMascot(exerciseDiv, 'exercise');
 
     var instruction = document.createElement('div');
     instruction.className = 'exercise-instruction';

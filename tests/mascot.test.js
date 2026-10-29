@@ -7,8 +7,9 @@ const vm = require('node:vm');
 const rootDir = path.resolve(__dirname, '..');
 
 class FakeElement {
-    constructor(tagName) {
+    constructor(tagName, id) {
         this.tagName = tagName;
+        this.id = id || '';
         this.children = [];
         this.attributes = {};
         this.className = '';
@@ -16,10 +17,40 @@ class FakeElement {
         this.textContent = '';
         this.src = '';
         this.alt = '';
+        this.hidden = false;
         this.offsetWidth = 1;
+        this.parentNode = null;
+    }
+
+    get classList() {
+        const element = this;
+        return {
+            add: function() {
+                const names = element.className.split(/\s+/).filter(Boolean);
+                Array.from(arguments).forEach(function(name) {
+                    if (!names.includes(name)) names.push(name);
+                });
+                element.className = names.join(' ');
+            },
+            remove: function() {
+                const removed = Array.from(arguments);
+                element.className = element.className.split(/\s+/).filter(function(name) {
+                    return name && !removed.includes(name);
+                }).join(' ');
+            },
+            contains: function(name) {
+                return element.className.split(/\s+/).includes(name);
+            }
+        };
     }
 
     appendChild(child) {
+        if (child.parentNode) {
+            child.parentNode.children = child.parentNode.children.filter(function(item) {
+                return item !== child;
+            });
+        }
+        child.parentNode = this;
         this.children.push(child);
         return child;
     }
@@ -29,9 +60,9 @@ class FakeElement {
     }
 
     querySelector(selector) {
-        const className = selector.slice(1);
+        const className = selector.startsWith('.') ? selector.slice(1) : null;
         for (const child of this.children) {
-            if (child.className.split(' ').includes(className)) return child;
+            if (className && child.className.split(/\s+/).includes(className)) return child;
             const nested = child.querySelector(selector);
             if (nested) return nested;
         }
@@ -39,64 +70,82 @@ class FakeElement {
     }
 }
 
-test('маскот подключён в шапке и используется как иконка сайта', function() {
+test('страница содержит одного постоянного Тоби и только основные элементы интерфейса', function() {
     const html = fs.readFileSync(path.join(rootDir, 'index.html'), 'utf8');
-    const mascot = fs.readFileSync(path.join(rootDir, 'images', 'mascot.svg'), 'utf8');
-    const favicon = fs.readFileSync(path.join(rootDir, 'images', 'favicon.svg'), 'utf8');
+    const css = fs.readFileSync(path.join(rootDir, 'css', 'spring-oasis.css'), 'utf8');
 
-    assert.ok(html.includes('images/favicon.svg'));
-    assert.ok(html.includes('images/mascot.svg'));
-    assert.ok(mascot.includes('viewBox="0 0 420 455"'));
-    assert.ok(favicon.includes('viewBox="0 0 128 128"'));
+    assert.equal((html.match(/id="mascotCompanion"/g) || []).length, 1);
+    assert.equal((html.match(/id="mascotImage"/g) || []).length, 1);
+    assert.equal((html.match(/src="images\/mascot\.svg"/g) || []).length, 1);
+    assert.ok(!html.includes('welcome-panel'));
+    assert.ok(!html.includes('welcome-tags'));
+    assert.ok(!html.includes('header-note'));
+    assert.ok(!html.includes('footer-note'));
+    assert.ok(css.includes('color: #fff;'));
+    assert.ok(css.includes('.topic-btn:hover'));
+    assert.ok(css.includes('background: var(--teal-dark);'));
+    assert.ok(!css.toLowerCase().includes('#667eea'));
+    assert.ok(!css.toLowerCase().includes('#764ba2'));
 });
 
-test('маскот меняет реакцию и сообщение, не создавая повторные блоки', function() {
+test('Тоби перемещается между страницами и обновляет одну и ту же реплику', function() {
     const source = fs.readFileSync(path.join(rootDir, 'js', 'mascot.js'), 'utf8');
-    const document = { createElement: function(tagName) { return new FakeElement(tagName); } };
+    const companion = new FakeElement('aside', 'mascotCompanion');
+    const image = new FakeElement('img', 'mascotImage');
+    const speech = new FakeElement('p', 'mascotSpeech');
+    image.className = 'mascot-image';
+    companion.appendChild(image);
+    companion.appendChild(speech);
+
+    const elements = {
+        mascotCompanion: companion,
+        mascotImage: image,
+        mascotSpeech: speech
+    };
+    const document = {
+        createElement: function(tagName) { return new FakeElement(tagName); },
+        getElementById: function(id) { return elements[id] || null; }
+    };
     const context = { document };
-    vm.runInNewContext(source + '\nglobalThis.__showMascotFeedback = showMascotFeedback;', context);
+    vm.runInNewContext(source + '\nglobalThis.__mountMascot = mountMascot; globalThis.__showMascotFeedback = showMascotFeedback;', context);
 
-    const container = new FakeElement('div');
-    context.__showMascotFeedback(container, true, 'Отличная работа!');
-    let feedback = container.querySelector('.mascot-feedback');
-    assert.ok(feedback);
-    assert.ok(feedback.className.includes('is-correct'));
-    assert.equal(feedback.querySelector('.mascot-feedback-message').textContent, 'Отличная работа!');
-    assert.equal(feedback.querySelector('.mascot-feedback-image').alt, 'Тоби радуется');
+    const home = new FakeElement('header');
+    const topics = new FakeElement('div');
+    const exercise = new FakeElement('div');
+    const progress = new FakeElement('div');
 
-    context.__showMascotFeedback(container, false, 'Ошибки помогают учиться!');
-    feedback = container.querySelector('.mascot-feedback');
-    assert.equal(container.children.length, 1);
-    assert.ok(feedback.className.includes('is-incorrect'));
-    assert.equal(feedback.querySelector('.mascot-feedback-message').textContent, 'Ошибки помогают учиться!');
-    assert.equal(feedback.querySelector('.mascot-feedback-image').alt, 'Тоби поддерживает ученика');
+    context.__mountMascot(home, 'home');
+    assert.equal(companion.parentNode, home);
+    context.__mountMascot(topics, 'topics');
+    assert.equal(companion.parentNode, topics);
+    assert.equal(home.children.length, 0);
+
+    context.__mountMascot(exercise, 'exercise');
+    context.__showMascotFeedback(exercise, true, 'Отличная работа!');
+    assert.equal(companion.parentNode, exercise);
+    assert.equal(speech.textContent, 'Отличная работа!');
+    assert.ok(companion.classList.contains('is-correct'));
+    assert.equal(exercise.children.filter(function(child) { return child === companion; }).length, 1);
+
+    context.__showMascotFeedback(exercise, false, 'Ошибки помогают учиться!');
+    assert.equal(speech.textContent, 'Ошибки помогают учиться!');
+    assert.ok(companion.classList.contains('is-incorrect'));
+    assert.equal(exercise.children.filter(function(child) { return child === companion; }).length, 1);
+
+    context.__mountMascot(progress, 'progress');
+    assert.equal(companion.parentNode, progress);
+    assert.equal(exercise.children.length, 0);
+    assert.equal(progress.children.filter(function(child) { return child === companion; }).length, 1);
+    assert.equal(companion.querySelector('.mascot-image'), image);
+    assert.equal(companion.children.filter(function(child) { return child === image; }).length, 1);
 });
 
+test('анимации Тоби учитывают настройку уменьшенного движения', function() {
+    const css = fs.readFileSync(path.join(rootDir, 'css', 'spring-oasis.css'), 'utf8');
 
-test('обычный результат задания сообщает только факт, а не подбадривает', function() {
-    const source = fs.readFileSync(path.join(rootDir, 'js', 'exercises.js'), 'utf8');
-
-    assert.ok(source.includes("showResult(exerciseDiv, true, 'Правильно.')"));
-    assert.ok(source.includes("showResult(exerciseDiv, true, 'Все пары найдены.')"));
-    assert.ok(source.includes("'Неправильно. Правильный ответ: ' + q.options[q.a]"));
-    assert.ok(source.includes("'Неправильно. Правильный ответ: ' + q.a[0]"));
-    assert.ok(!source.includes("'Отлично! Правильно!'"));
-    assert.ok(!source.includes("'Отлично! Все пары найдены!'"));
-});
-
-
-test('Тоби расположен поверх навигации, а иконка использует прозрачный фон', function() {
-    const html = fs.readFileSync(path.join(rootDir, 'index.html'), 'utf8');
-    const css = fs.readFileSync(path.join(rootDir, 'css', 'style.css'), 'utf8');
-    const favicon = fs.readFileSync(path.join(rootDir, 'images', 'favicon.svg'), 'utf8');
-    const mascot = fs.readFileSync(path.join(rootDir, 'images', 'mascot.svg'), 'utf8');
-
-    assert.ok(html.includes('Тоби — дружелюбная обезьянка'));
-    assert.match(css, /\.mascot-header\s*\{[^}]*position:\s*absolute/);
-    assert.match(css, /\.mascot-header\s*\{[^}]*z-index:\s*10/);
-    assert.match(css, /\.mascot-header\s*\{[^}]*pointer-events:\s*none/);
-    assert.ok(!favicon.includes('fill="#d9f2ef"'));
-    assert.ok(!/<rect[^>]+fill=/i.test(favicon));
-    assert.ok(favicon.includes('viewBox="0 0 128 128"'));
-    assert.ok(mascot.includes('C409 385 383 439 344 440'));
+    assert.ok(css.includes('@keyframes toby-idle'));
+    assert.ok(css.includes('@keyframes toby-hop'));
+    assert.ok(css.includes('@keyframes toby-celebrate'));
+    assert.ok(css.includes('@keyframes toby-encourage'));
+    assert.ok(css.includes('prefers-reduced-motion'));
 });

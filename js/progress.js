@@ -58,7 +58,8 @@ function saveProgress(topic, exerciseType, isCorrect, timeTaken) {
     if (!studentName || !topic || !exerciseType) return false;
 
     try {
-        var progress = getProgress();
+        mountMascot(document.querySelector('.site-header'), 'home');
+    var progress = getProgress();
         progress.push({
             name: studentName,
             topic: topic,
@@ -111,10 +112,15 @@ function showProgress() {
     backBtn.textContent = 'На главную';
     backBtn.className = 'back-btn';
 
+    var heading = document.createElement('div');
+    heading.className = 'section-heading progress-heading';
+
     var title = document.createElement('h2');
     title.className = 'exercise-title';
     title.textContent = 'Мой прогресс';
-    exercises.appendChild(title);
+    heading.appendChild(title);
+    mountMascot(heading, 'progress');
+    exercises.appendChild(heading);
 
     var greeting = document.createElement('p');
     greeting.className = 'progress-greeting';
