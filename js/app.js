@@ -7,6 +7,9 @@ function showSection(section, fromBack) {
     if (!fromBack) navigationHistory.push('main');
     currentSection = section;
 
+    var header = document.querySelector('.site-header');
+    mountMascot(header, 'home');
+
     var topicsList = document.getElementById('topicsList');
     var exercises = document.getElementById('exercises');
     var mainNav = document.getElementById('mainNav');
@@ -15,10 +18,15 @@ function showSection(section, fromBack) {
     exercises.innerHTML = '';
     topicsList.innerHTML = '';
 
+    var heading = document.createElement('div');
+    heading.className = 'section-heading';
+
     var sectionTitle = document.createElement('h2');
     sectionTitle.className = 'exercise-title';
     sectionTitle.textContent = sectionNames[section] || section;
-    topicsList.appendChild(sectionTitle);
+    heading.appendChild(sectionTitle);
+    mountMascot(heading, 'topics');
+    topicsList.appendChild(heading);
 
     Object.keys(topics).forEach(function(topic) {
         var button = document.createElement('button');
@@ -41,6 +49,7 @@ function showTopic(topic) {
     var topics = content[currentSection];
     if (!topics || !topics[topic]) return;
 
+    mountMascot(document.querySelector('.site-header'), 'home');
     navigationHistory.push(currentSection);
     currentTopic = topic;
     usedExercisesInCycle = [];
@@ -62,6 +71,7 @@ function showNextExercise() {
     if (!topicData || !Array.isArray(topicData.exercises) || topicData.exercises.length === 0) return;
 
     var exercises = document.getElementById('exercises');
+    mountMascot(document.querySelector('.site-header'), 'home');
     exercises.innerHTML = '';
 
     if (usedExercisesInCycle.length >= topicData.exercises.length) {
@@ -106,6 +116,7 @@ function showNextExercise() {
 }
 
 function showMain() {
+    mountMascot(document.querySelector('.site-header'), 'home');
     document.getElementById('exercises').innerHTML = '';
     document.getElementById('topicsList').innerHTML = '';
     document.getElementById('mainNav').className = 'main-nav';

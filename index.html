@@ -6,7 +6,7 @@
     <meta name="description" content="Интерактивный тренажёр английского языка для учеников начальной школы.">
     <meta name="theme-color" content="#52AEA3">
     <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
-    <title>English for Kids — учимся вместе с Тоби</title>
+    <title>English for Kids</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/spring-oasis.css">
 </head>
@@ -14,95 +14,58 @@
     <div class="container">
         <header class="site-header">
             <div class="header-copy">
-                <span class="header-eyebrow"><span class="eyebrow-spark" aria-hidden="true">✦</span> ТВОЁ АНГЛИЙСКОЕ ПРИКЛЮЧЕНИЕ</span>
                 <h1>English for Kids</h1>
-                <p>Учим английский — 2 класс</p>
-                <span class="header-note">Играй, открывай новое и учись вместе с Тоби</span>
+                <p>Английский язык — 2 класс</p>
             </div>
-            <div class="mascot-header" aria-hidden="true">
+            <aside id="mascotCompanion" class="mascot-companion mascot-position--home" aria-label="Тоби">
                 <img
+                    id="mascotImage"
+                    class="mascot-image"
                     src="images/mascot.svg"
-                    alt="Тоби — дружелюбная обезьянка, талисман сайта"
+                    alt="Тоби"
                     width="132"
                     height="148"
                     decoding="async"
                     fetchpriority="high"
                 >
-            </div>
-            <span class="header-orbit header-orbit--one" aria-hidden="true"></span>
-            <span class="header-orbit header-orbit--two" aria-hidden="true"></span>
+                <p id="mascotSpeech" class="mascot-speech" role="status" aria-live="polite" hidden></p>
+            </aside>
         </header>
 
         <nav class="main-nav" id="mainNav" aria-label="Основная навигация">
-            <button class="nav-btn nav-btn--grammar" type="button" data-action="grammar">
-                <span class="nav-btn-icon" aria-hidden="true">Aa</span>
-                <span class="nav-btn-copy"><strong>Грамматика</strong><small>Строим фразы</small></span>
-                <span class="nav-btn-arrow" aria-hidden="true">↗</span>
-            </button>
-            <button class="nav-btn nav-btn--reading" type="button" data-action="reading">
-                <span class="nav-btn-icon" aria-hidden="true">▤</span>
-                <span class="nav-btn-copy"><strong>Чтение</strong><small>Слушаем и читаем</small></span>
-                <span class="nav-btn-arrow" aria-hidden="true">↗</span>
-            </button>
-            <button class="nav-btn nav-btn--vocabulary" type="button" data-action="vocabulary">
-                <span class="nav-btn-icon" aria-hidden="true">✿</span>
-                <span class="nav-btn-copy"><strong>Лексика</strong><small>Открываем слова</small></span>
-                <span class="nav-btn-arrow" aria-hidden="true">↗</span>
-            </button>
-            <button class="nav-btn nav-btn--progress" type="button" data-action="progress">
-                <span class="nav-btn-icon" aria-hidden="true">↗</span>
-                <span class="nav-btn-copy"><strong>Мой прогресс</strong><small>Вижу свои успехи</small></span>
-                <span class="nav-btn-arrow" aria-hidden="true">→</span>
-            </button>
+            <button class="nav-btn" type="button" data-action="grammar">Грамматика</button>
+            <button class="nav-btn" type="button" data-action="reading">Чтение</button>
+            <button class="nav-btn" type="button" data-action="vocabulary">Лексика</button>
+            <button class="nav-btn nav-btn--progress" type="button" data-action="progress">Мой прогресс</button>
         </nav>
 
         <div id="nameModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="nameModalTitle">
             <form id="nameForm" class="modal-content">
-                <span class="modal-kicker">ДАВАЙ ЗНАКОМИТЬСЯ</span>
-                <h2 id="nameModalTitle">Добро пожаловать!</h2>
-                <p>Тоби уже готов к приключению. Как тебя зовут?</p>
-                <label for="studentName">Имя ученика</label>
+                <h2 id="nameModalTitle">Привет! Как тебя зовут?</h2>
+                <label for="studentName">Твоё имя</label>
                 <input
                     type="text"
                     id="studentName"
                     name="studentName"
                     class="fill-input"
-                    placeholder="Твоё имя"
+                    placeholder="Имя"
                     autocomplete="given-name"
                     maxlength="40"
                     required
                     aria-describedby="nameError"
                 >
                 <p id="nameError" class="form-message" role="status" aria-live="polite"></p>
-                <button class="nav-btn modal-submit" type="submit">Начать обучение <span aria-hidden="true">→</span></button>
+                <button class="nav-btn modal-submit" type="submit">Начать</button>
             </form>
         </div>
 
         <p id="storageWarning" class="storage-warning" role="status" aria-live="polite"></p>
 
         <main id="mainContent">
-            <section class="welcome-panel" id="welcomePanel" aria-labelledby="welcomeTitle">
-                <div class="welcome-copy">
-                    <span class="section-kicker"><span aria-hidden="true">✦</span> МАЛЕНЬКИЕ ШАГИ — БОЛЬШИЕ ОТКРЫТИЯ</span>
-                    <h2 id="welcomeTitle">Каждый день — новая победа</h2>
-                    <p>Выбери направление, выполни несколько заданий и порадуй Тоби своими успехами.</p>
-                </div>
-                <div class="welcome-tags" aria-label="Что тебя ждёт">
-                    <span><i aria-hidden="true">●</i> Новые слова</span>
-                    <span><i aria-hidden="true">●</i> Весёлые задания</span>
-                    <span><i aria-hidden="true">●</i> Твой прогресс</span>
-                </div>
-            </section>
             <div id="topicsList" class="topics-list"></div>
             <div id="exercises" class="exercises"></div>
-            <button id="backBtn" class="back-btn hidden" type="button"><span aria-hidden="true">←</span> Назад</button>
+            <button id="backBtn" class="back-btn hidden" type="button">Назад</button>
         </main>
-
-        <footer class="site-footer">
-            <span class="footer-mark" aria-hidden="true">✦</span>
-            <p>Учи. Играй. Повторяй.</p>
-            <span class="footer-note">Тоби верит в тебя!</span>
-        </footer>
     </div>
 
     <script src="js/content.js"></script>

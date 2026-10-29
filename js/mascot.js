@@ -15,41 +15,54 @@ var mascotMessages = {
     ]
 };
 
-function showMascotFeedback(container, isCorrect, customMessage) {
+/**
+ * Перемещает один и тот же экземпляр Тоби в активную область страницы.
+ * Сообщение очищается при переходе на новый экран, но не при реакции на ответ.
+ */
+function mountMascot(container, position, clearMessage) {
     if (!container) return;
 
-    var feedback = container.querySelector('.mascot-feedback');
-    if (!feedback) {
-        feedback = document.createElement('div');
-        feedback.className = 'mascot-feedback';
+    var companion = document.getElementById('mascotCompanion');
+    if (!companion) return;
 
-        var image = document.createElement('img');
-        image.className = 'mascot-feedback-image';
-        image.src = 'images/mascot.svg';
-        image.width = 76;
-        image.height = 86;
-        image.decoding = 'async';
+    var speech = document.getElementById('mascotSpeech');
+    companion.className = 'mascot-companion mascot-position--' + (position || 'inline');
 
-        var message = document.createElement('p');
-        message.className = 'mascot-feedback-message';
-        message.setAttribute('role', 'status');
-        message.setAttribute('aria-live', 'polite');
-
-        feedback.appendChild(image);
-        feedback.appendChild(message);
-        container.appendChild(feedback);
+    if (clearMessage !== false && speech) {
+        speech.textContent = '';
+        speech.hidden = true;
+        companion.classList.remove('is-correct', 'is-incorrect');
     }
 
-    var imageElement = feedback.querySelector('.mascot-feedback-image');
-    var messageElement = feedback.querySelector('.mascot-feedback-message');
-    feedback.className = 'mascot-feedback ' + (isCorrect ? 'is-correct' : 'is-incorrect');
-    imageElement.alt = isCorrect ? 'Тоби радуется' : 'Тоби поддерживает ученика';
-    messageElement.textContent = customMessage || getMascotMessage(isCorrect);
+    if (companion.parentNode !== container) {
+        container.appendChild(companion);
+    }
 
-    // Restart the small reaction animation when the same state occurs twice.
-    imageElement.style.animation = 'none';
-    void imageElement.offsetWidth;
-    imageElement.style.animation = '';
+    void companion.offsetWidth;
+    companion.classList.add('is-moving');
+}
+
+/**
+ * Тоби говорит из своего постоянного блока: новая картинка не создаётся.
+ */
+function showMascotFeedback(container, isCorrect, customMessage) {
+    var companion = document.getElementById('mascotCompanion');
+    var image = document.getElementById('mascotImage');
+    var speech = document.getElementById('mascotSpeech');
+
+    if (!companion || !image || !speech) return;
+
+    if (container && companion.parentNode !== container) {
+        mountMascot(container, 'exercise', false);
+    }
+
+    companion.classList.remove('is-correct', 'is-incorrect');
+    void image.offsetWidth;
+    companion.classList.add(isCorrect ? 'is-correct' : 'is-incorrect');
+
+    image.alt = isCorrect ? 'Тоби радуется' : 'Тоби поддерживает ученика';
+    speech.textContent = customMessage || getMascotMessage(isCorrect);
+    speech.hidden = false;
 }
 
 function getMascotMessage(isCorrect) {
