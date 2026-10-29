@@ -124,7 +124,12 @@ function showProgress() {
 
     var greeting = document.createElement('p');
     greeting.className = 'progress-greeting';
-    greeting.textContent = 'Ученик: ' + studentName;
+    var greetingLabel = document.createElement('span');
+    greetingLabel.textContent = 'Ученик:';
+    var greetingName = document.createElement('strong');
+    greetingName.textContent = studentName;
+    greeting.appendChild(greetingLabel);
+    greeting.appendChild(greetingName);
     exercises.appendChild(greeting);
 
     var hasAnyProgress = false;

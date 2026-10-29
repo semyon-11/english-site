@@ -47,6 +47,10 @@ function showMascotFeedback(container, isCorrect, customMessage) {
 
     if (!companion || !image || !speech) return;
 
+    if (typeof window !== 'undefined' && typeof window.playAnswerSound === 'function') {
+        window.playAnswerSound(isCorrect);
+    }
+
     if (container && companion.parentNode !== container) {
         mountMascot(container, 'exercise', false);
     }
