@@ -434,3 +434,23 @@ header p {
     color: #667eea;
     margin-bottom: 10px;
 }
+
+/* Progress view */
+.progress-greeting {
+    text-align: center;
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+.progress-section { margin-bottom: 30px; }
+.progress-section-title {
+    color: #667eea;
+    font-size: 1.4em;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 5px;
+}
+.progress-count { font-size: 1.1em; margin-bottom: 8px; }
+.progress-correct { color: #28a745; font-weight: bold; }
+.progress-incorrect { color: #dc3545; font-weight: bold; }
+.progress-empty { text-align: center; font-size: 1.2em; color: #666; }
