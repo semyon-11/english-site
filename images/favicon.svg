@@ -1,30 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
   <defs>
-    <linearGradient id="fur" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#c9824d"/>
-      <stop offset="1" stop-color="#98552f"/>
-    </linearGradient>
-    <linearGradient id="face" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#ffe4bf"/>
-      <stop offset="1" stop-color="#f4c997"/>
-    </linearGradient>
+    <linearGradient id="fur" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d28a54"/><stop offset="1" stop-color="#95502e"/></linearGradient>
+    <linearGradient id="face" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9ca"/><stop offset="1" stop-color="#f2c795"/></linearGradient>
   </defs>
-  <circle cx="64" cy="64" r="62" fill="#d9f2ef"/>
-  <circle cx="23" cy="66" r="20" fill="url(#fur)" stroke="#874b2b" stroke-width="3"/>
-  <circle cx="105" cy="66" r="20" fill="url(#fur)" stroke="#874b2b" stroke-width="3"/>
-  <circle cx="23" cy="66" r="10" fill="#e9a77e"/>
-  <circle cx="105" cy="66" r="10" fill="#e9a77e"/>
-  <path d="M29 64 C26 27 45 13 64 13 C86 13 103 30 99 65 C97 101 81 115 64 115 C46 115 30 100 29 64Z"
-        fill="url(#fur)" stroke="#874b2b" stroke-width="3"/>
-  <path d="M52 18 Q48 5 58 7 Q61 15 66 13 Q73 1 79 9 L82 18"
-        fill="#a96339" stroke="#874b2b" stroke-width="2" stroke-linejoin="round"/>
-  <path d="M39 61 C41 39 52 33 64 33 C78 33 88 42 89 62 C90 83 79 93 64 94 C49 93 38 82 39 61Z"
-        fill="url(#face)"/>
-  <ellipse cx="52" cy="59" rx="4.5" ry="7" fill="#38251f"/>
-  <ellipse cx="76" cy="59" rx="4.5" ry="7" fill="#38251f"/>
-  <circle cx="54" cy="56" r="1.8" fill="#fff"/>
-  <circle cx="78" cy="56" r="1.8" fill="#fff"/>
-  <ellipse cx="64" cy="69" rx="5" ry="3.5" fill="#80452f"/>
-  <path d="M48 75 Q64 92 80 75 Q77 89 64 89 Q51 89 48 75Z" fill="#6e302e"/>
-  <path d="M54 77 Q64 83 74 77 Q71 83 64 84 Q57 83 54 77Z" fill="#fffaf1"/>
+  <!-- Transparent background: Toby fills the whole square icon. -->
+  <circle cx="16" cy="70" r="27" fill="url(#fur)" stroke="#874b2b" stroke-width="3"/>
+  <circle cx="112" cy="70" r="27" fill="url(#fur)" stroke="#874b2b" stroke-width="3"/>
+  <circle cx="16" cy="70" r="15" fill="#e9a77e"/>
+  <circle cx="112" cy="70" r="15" fill="#e9a77e"/>
+  <path d="M10 66 C6 28 30 2 64 2 C98 2 122 29 118 68 C116 108 94 128 64 128 C34 128 12 108 10 66Z" fill="url(#fur)" stroke="#874b2b" stroke-width="3"/>
+  <path d="M47 14 Q39 -1 53 2 Q57 12 65 10 Q75 -3 84 4 L88 16" fill="#a96339" stroke="#874b2b" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M27 65 C28 36 44 24 64 24 C85 24 101 38 102 66 C103 96 87 110 64 112 C41 110 25 95 27 65Z" fill="url(#face)"/>
+  <ellipse cx="49" cy="61" rx="6" ry="9" fill="#38251f"/>
+  <ellipse cx="79" cy="61" rx="6" ry="9" fill="#38251f"/>
+  <circle cx="51" cy="57" r="2.5" fill="#fff"/>
+  <circle cx="81" cy="57" r="2.5" fill="#fff"/>
+  <ellipse cx="64" cy="76" rx="7" ry="5" fill="#80452f"/>
+  <path d="M43 83 Q64 108 85 83 Q82 104 64 105 Q46 104 43 83Z" fill="#6e302e"/>
+  <path d="M51 86 Q64 94 77 86 Q74 93 64 94 Q54 93 51 86Z" fill="#fffaf1"/>
 </svg>

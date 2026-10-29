@@ -83,3 +83,20 @@ test('обычный результат задания сообщает толь
     assert.ok(!source.includes("'Отлично! Правильно!'"));
     assert.ok(!source.includes("'Отлично! Все пары найдены!'"));
 });
+
+
+test('Тоби расположен поверх навигации, а иконка использует прозрачный фон', function() {
+    const html = fs.readFileSync(path.join(rootDir, 'index.html'), 'utf8');
+    const css = fs.readFileSync(path.join(rootDir, 'css', 'style.css'), 'utf8');
+    const favicon = fs.readFileSync(path.join(rootDir, 'images', 'favicon.svg'), 'utf8');
+    const mascot = fs.readFileSync(path.join(rootDir, 'images', 'mascot.svg'), 'utf8');
+
+    assert.ok(html.includes('Тоби — дружелюбная обезьянка'));
+    assert.match(css, /\.mascot-header\s*\{[^}]*position:\s*absolute/);
+    assert.match(css, /\.mascot-header\s*\{[^}]*z-index:\s*10/);
+    assert.match(css, /\.mascot-header\s*\{[^}]*pointer-events:\s*none/);
+    assert.ok(!favicon.includes('fill="#d9f2ef"'));
+    assert.ok(!/<rect[^>]+fill=/i.test(favicon));
+    assert.ok(favicon.includes('viewBox="0 0 128 128"'));
+    assert.ok(mascot.includes('C409 385 383 439 344 440'));
+});
