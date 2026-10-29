@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 400" role="img" aria-labelledby="title desc">
+  <title id="title">Тото — обезьянка-помощник</title>
+  <desc id="desc">Добрая рыжевато-коричневая обезьянка в бирюзовом свитере с раскрытой книгой.</desc>
+  <defs>
+    <linearGradient id="fur" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c9824d"/>
+      <stop offset="1" stop-color="#98552f"/>
+    </linearGradient>
+    <linearGradient id="shirt" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#48b9b0"/>
+      <stop offset="1" stop-color="#238b87"/>
+    </linearGradient>
+    <linearGradient id="face" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe4bf"/>
+      <stop offset="1" stop-color="#f4c997"/>
+    </linearGradient>
+  </defs>
+
+  <ellipse cx="179" cy="376" rx="112" ry="13" fill="#204d50" opacity=".12"/>
+
+  <!-- Curled tail -->
+  <path d="M260 310 C315 325 340 294 329 260 C321 234 290 231 278 251"
+        fill="none" stroke="#87502f" stroke-width="24" stroke-linecap="round"/>
+  <path d="M260 310 C315 325 340 294 329 260 C321 234 290 231 278 251"
+        fill="none" stroke="#ca8958" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Sweater and open arms -->
+  <path d="M75 358 C82 312 100 291 133 282 L227 282 C261 291 280 312 286 358
+           Q180 381 75 358Z" fill="url(#shirt)" stroke="#206f6c" stroke-width="5"/>
+  <path d="M100 312 C78 296 62 279 58 256 C56 242 67 232 79 237
+           C94 244 100 267 123 279" fill="none" stroke="#a86239" stroke-width="25" stroke-linecap="round"/>
+  <path d="M260 312 C282 294 298 278 301 255 C303 241 292 232 280 238
+           C265 245 260 267 237 280" fill="none" stroke="#a86239" stroke-width="25" stroke-linecap="round"/>
+  <path d="M59 253 Q56 238 69 232 Q82 228 88 242" fill="none" stroke="#d18b58" stroke-width="10" stroke-linecap="round"/>
+  <path d="M300 252 Q304 238 291 232 Q278 228 272 242" fill="none" stroke="#d18b58" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- Open book -->
+  <path d="M116 318 Q148 303 180 322 Q212 303 244 318 L244 356
+           Q211 341 180 359 Q149 341 116 356Z"
+        fill="#fff8e8" stroke="#d6a34e" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M180 322 L180 358" fill="none" stroke="#d6a34e" stroke-width="3"/>
+  <path d="M132 330 Q151 324 166 332 M132 340 Q151 334 166 342
+           M194 332 Q210 324 229 330 M194 342 Q210 334 229 340"
+        fill="none" stroke="#8ebbb2" stroke-width="3" stroke-linecap="round"/>
+  <path d="M177 310 L183 300 L189 310 L201 312 L192 320 L194 332 L183 326 L172 332 L174 320 L165 312Z"
+        fill="#f6c95d"/>
+
+  <!-- Ears -->
+  <circle cx="73" cy="176" r="48" fill="url(#fur)" stroke="#874b2b" stroke-width="5"/>
+  <circle cx="287" cy="176" r="48" fill="url(#fur)" stroke="#874b2b" stroke-width="5"/>
+  <circle cx="73" cy="176" r="27" fill="#e9a77e"/>
+  <circle cx="287" cy="176" r="27" fill="#e9a77e"/>
+  <circle cx="73" cy="176" r="14" fill="#f4c69d" opacity=".8"/>
+  <circle cx="287" cy="176" r="14" fill="#f4c69d" opacity=".8"/>
+
+  <!-- Head -->
+  <path d="M85 176 C79 108 123 54 180 53 C238 52 282 107 276 176
+           C273 247 235 282 180 285 C125 282 87 246 85 176Z"
+        fill="url(#fur)" stroke="#874b2b" stroke-width="5"/>
+  <path d="M153 63 Q145 39 161 30 Q164 47 177 47 Q185 27 197 30 Q201 46 211 53"
+        fill="#a96339" stroke="#874b2b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Face mask and muzzle -->
+  <path d="M115 156 C117 111 146 91 180 92 C215 91 243 113 245 157
+           C249 211 222 245 180 249 C138 245 111 211 115 156Z"
+        fill="url(#face)"/>
+  <ellipse cx="180" cy="206" rx="66" ry="43" fill="#ffedcf"/>
+  <ellipse cx="180" cy="177" rx="12" ry="8" fill="#80452f"/>
+  <ellipse cx="176" cy="174" rx="3" ry="2" fill="#f8d8b1"/>
+
+  <!-- Eyes -->
+  <path d="M129 151 Q145 140 160 151" fill="none" stroke="#693b2a" stroke-width="5" stroke-linecap="round"/>
+  <path d="M200 151 Q216 140 231 151" fill="none" stroke="#693b2a" stroke-width="5" stroke-linecap="round"/>
+  <ellipse cx="145" cy="166" rx="10" ry="14" fill="#38251f"/>
+  <ellipse cx="215" cy="166" rx="10" ry="14" fill="#38251f"/>
+  <circle cx="149" cy="160" r="4" fill="#fff"/>
+  <circle cx="219" cy="160" r="4" fill="#fff"/>
+
+  <!-- Cheeks and smile -->
+  <ellipse cx="126" cy="194" rx="14" ry="8" fill="#e99d87" opacity=".48"/>
+  <ellipse cx="234" cy="194" rx="14" ry="8" fill="#e99d87" opacity=".48"/>
+  <path d="M139 211 Q180 254 221 211 Q218 248 180 251 Q142 248 139 211Z"
+        fill="#6e302e" stroke="#743b30" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M147 218 Q180 235 213 218 Q208 232 180 235 Q152 232 147 218Z"
+        fill="#fffaf1"/>
+  <path d="M165 245 Q180 250 195 245" fill="none" stroke="#d98174" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Neck scarf -->
+  <path d="M139 270 Q180 291 221 270 L212 302 Q180 315 148 302Z"
+        fill="#f2c65b" stroke="#bd8d36" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M204 293 L231 305 L216 322 L195 301Z" fill="#f2c65b" stroke="#bd8d36" stroke-width="3"/>
+</svg>

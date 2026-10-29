@@ -244,9 +244,12 @@ function renderExercise(exercise, container) {
                     var timeTaken = Math.round((Date.now() - questionStartTime) / 1000);
                     saveProgress(currentTopic, currentExerciseData.original.type, true, timeTaken);
                     showResult(exerciseDiv, true, 'Отлично! Все пары найдены!');
+                } else {
+                    showMascotFeedback(exerciseDiv, true, 'Верная пара! Продолжай в том же духе.');
                 }
             } else {
                 feedback.textContent = 'Это не пара. Попробуйте ещё раз.';
+                showMascotFeedback(exerciseDiv, false, 'Пока не совпало. Попробуй другую пару!');
                 selectedLeft.classList.add('wrong');
                 selectedRight.classList.add('wrong');
 
@@ -422,6 +425,7 @@ function showResult(exerciseDiv, isCorrect, message) {
     result.setAttribute('aria-live', 'polite');
     result.textContent = message;
     exerciseDiv.appendChild(result);
+    showMascotFeedback(exerciseDiv, isCorrect);
 
     var nextBtn = document.createElement('button');
     nextBtn.className = 'next-btn';
