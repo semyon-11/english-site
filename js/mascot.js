@@ -15,10 +15,7 @@ var mascotMessages = {
     ]
 };
 
-/**
- * Перемещает один и тот же экземпляр Тоби в активную область страницы.
- * Сообщение очищается при переходе на новый экран, но не при реакции на ответ.
- */
+
 function mountMascot(container, position, clearMessage) {
     if (!container) return;
 
@@ -42,9 +39,7 @@ function mountMascot(container, position, clearMessage) {
     companion.classList.add('is-moving');
 }
 
-/**
- * Тоби говорит из своего постоянного блока: новая картинка не создаётся.
- */
+
 function showMascotFeedback(container, isCorrect, customMessage) {
     var companion = document.getElementById('mascotCompanion');
     var image = document.getElementById('mascotImage');

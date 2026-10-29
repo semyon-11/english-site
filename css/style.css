@@ -435,7 +435,7 @@ header p {
     margin-bottom: 10px;
 }
 
-/* Progress view */
+
 .progress-greeting {
     text-align: center;
     font-size: 1.2em;
@@ -456,7 +456,7 @@ header p {
 .progress-empty { text-align: center; font-size: 1.2em; color: #666; }
 
 
-/* Keyboard and assistive-technology support */
+
 button,
 input {
     font-family: inherit;
@@ -528,7 +528,7 @@ input:focus-visible {
 
 
 
-/* Toby sits above the navigation, with his feet and tail hanging over a button. */
+
 .container {
     position: relative;
 }
