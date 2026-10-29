@@ -58,8 +58,7 @@ function saveProgress(topic, exerciseType, isCorrect, timeTaken) {
     if (!studentName || !topic || !exerciseType) return false;
 
     try {
-        mountMascot(document.querySelector('.site-header'), 'home');
-    var progress = getProgress();
+        var progress = getProgress();
         progress.push({
             name: studentName,
             topic: topic,
@@ -95,6 +94,7 @@ function showProgress() {
     if (!name) return;
 
     studentName = name;
+    mountMascot(document.querySelector('.site-header'), 'home');
     navigationHistory = [];
     currentSection = '';
     currentTopic = '';
