@@ -43,7 +43,7 @@ function showMascotFeedback(container, isCorrect, customMessage) {
     var imageElement = feedback.querySelector('.mascot-feedback-image');
     var messageElement = feedback.querySelector('.mascot-feedback-message');
     feedback.className = 'mascot-feedback ' + (isCorrect ? 'is-correct' : 'is-incorrect');
-    imageElement.alt = isCorrect ? 'Тото радуется' : 'Тото поддерживает ученика';
+    imageElement.alt = isCorrect ? 'Тоби радуется' : 'Тоби поддерживает ученика';
     messageElement.textContent = customMessage || getMascotMessage(isCorrect);
 
     // Restart the small reaction animation when the same state occurs twice.
