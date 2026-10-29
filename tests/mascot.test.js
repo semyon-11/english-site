@@ -71,3 +71,15 @@ test('маскот меняет реакцию и сообщение, не со�
     assert.equal(feedback.querySelector('.mascot-feedback-message').textContent, 'Ошибки помогают учиться!');
     assert.equal(feedback.querySelector('.mascot-feedback-image').alt, 'Тото поддерживает ученика');
 });
+
+
+test('обычный результат задания сообщает только факт, а не подбадривает', function() {
+    const source = fs.readFileSync(path.join(rootDir, 'js', 'exercises.js'), 'utf8');
+
+    assert.ok(source.includes("showResult(exerciseDiv, true, 'Правильно.')"));
+    assert.ok(source.includes("showResult(exerciseDiv, true, 'Все пары найдены.')"));
+    assert.ok(source.includes("'Неправильно. Правильный ответ: ' + q.options[q.a]"));
+    assert.ok(source.includes("'Неправильно. Правильный ответ: ' + q.a[0]"));
+    assert.ok(!source.includes("'Отлично! Правильно!'"));
+    assert.ok(!source.includes("'Отлично! Все пары найдены!'"));
+});

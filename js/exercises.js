@@ -238,18 +238,18 @@ function renderExercise(exercise, container) {
                 selectedLeft.setAttribute('aria-pressed', 'true');
                 selectedRight.setAttribute('aria-pressed', 'true');
                 matchedPairs += 1;
-                feedback.textContent = 'Пара найдена.';
+                feedback.textContent = 'Совпадение найдено.';
 
                 if (matchedPairs === pairs.length) {
                     var timeTaken = Math.round((Date.now() - questionStartTime) / 1000);
                     saveProgress(currentTopic, currentExerciseData.original.type, true, timeTaken);
-                    showResult(exerciseDiv, true, 'Отлично! Все пары найдены!');
+                    showResult(exerciseDiv, true, 'Все пары найдены.');
                 } else {
-                    showMascotFeedback(exerciseDiv, true, 'Верная пара! Продолжай в том же духе.');
+                    showMascotFeedback(exerciseDiv, true, 'Верная пара! Отлично получается.');
                 }
             } else {
-                feedback.textContent = 'Это не пара. Попробуйте ещё раз.';
-                showMascotFeedback(exerciseDiv, false, 'Пока не совпало. Попробуй другую пару!');
+                feedback.textContent = 'Эта пара не подходит.';
+                showMascotFeedback(exerciseDiv, false, 'Эта пара не подходит. Попробуй другую!');
                 selectedLeft.classList.add('wrong');
                 selectedRight.classList.add('wrong');
 
@@ -359,7 +359,7 @@ function handleMultipleChoiceAnswer(exerciseDiv, q, selectedOptIndex, selectedLa
 
     if (isCorrect) {
         selectedLabel.classList.add('correct-answer');
-        showResult(exerciseDiv, true, 'Отлично! Правильно!');
+        showResult(exerciseDiv, true, 'Правильно.');
     } else {
         selectedLabel.classList.add('wrong-answer');
         labels[q.a].classList.add('correct-answer');
