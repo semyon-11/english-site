@@ -15,11 +15,11 @@
     font-weight: 800;
     line-height: 1.25;
     text-align: center;
-    transition: transform .22s var(--ease), border-color .22s, background .22s, color .22s, box-shadow .22s;
+    transition: border-color .22s, background .22s, color .22s, box-shadow .22s;
 }
 
 .nav-btn:hover {
-    transform: translateY(-3px);
+
     border-color: var(--teal);
     background: #edf7f1;
     box-shadow: var(--shadow);
@@ -55,12 +55,12 @@
     font-weight: 750;
     line-height: 1.35;
     text-align: left;
-    transition: transform .22s var(--ease), border-color .22s, background .22s, color .22s, box-shadow .22s;
+    transition: border-color .22s, background .22s, color .22s, box-shadow .22s;
     animation: card-in .4s var(--ease) both;
 }
 
 .topic-btn:hover {
-    transform: translateY(-3px);
+
     border-color: var(--teal-dark);
     background: var(--teal-dark);
     box-shadow: 0 10px 22px rgba(40, 122, 115, .2);
@@ -126,11 +126,11 @@
     cursor: pointer;
     font-size: 1.05rem;
     font-weight: 650;
-    transition: transform .2s var(--ease), border-color .2s, background .2s, color .2s, box-shadow .2s;
+    transition: border-color .2s, background .2s, color .2s, box-shadow .2s;
 }
 
 .option-label:hover {
-    transform: translateY(-2px);
+
     border-color: var(--teal);
     background: #edf7f1;
     color: var(--teal-deep);
@@ -185,11 +185,11 @@
     font-weight: 700;
     line-height: 1.3;
     text-align: center;
-    transition: transform .2s var(--ease), border-color .2s, background .2s, color .2s;
+    transition: border-color .2s, background .2s, color .2s;
 }
 
 .matching-item:hover:not(:disabled) {
-    transform: translateY(-2px);
+
     border-color: var(--teal);
     background: #edf7f1;
     color: var(--teal-deep);
@@ -241,11 +241,11 @@
     font-weight: 800;
     line-height: 1.25;
     text-align: center;
-    transition: transform .2s var(--ease), background .2s, color .2s, box-shadow .2s;
+    transition: background .2s, color .2s, box-shadow .2s;
 }
 
 .next-btn:hover, .check-btn:hover, .audio-btn:hover {
-    transform: translateY(-2px);
+
     background: var(--teal-deep);
     color: #fff;
     box-shadow: 0 10px 22px rgba(32, 90, 85, .2);
@@ -643,6 +643,5 @@ button,
 
 button.is-pressed,
 .option-label.is-pressed {
-    animation: tap-press .24s var(--ease);
-    transition: none;
+    animation: tap-press .18s ease-out 1;
 }

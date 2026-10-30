@@ -89,16 +89,11 @@
     }
 
     if (typeof document !== 'undefined') {
-        document.addEventListener('pointerdown', function(event) {
+        document.addEventListener('click', function(event) {
+            if (!event.isTrusted) return;
             var control = findControl(event.target);
             if (!isAvailable(control)) return;
             animateControl(control);
-        }, { passive: true });
-
-        document.addEventListener('click', function(event) {
-            var control = findControl(event.target);
-            if (!isAvailable(control)) return;
-            if (event.detail === 0) animateControl(control);
             playClickSound();
         });
     }
