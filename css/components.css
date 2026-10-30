@@ -26,7 +26,6 @@
     color: var(--teal-deep);
 }
 
-.nav-btn:active { transform: translateY(-1px) scale(.99); }
 
 .nav-btn--progress {
     border-color: #c4e5ad;
@@ -68,7 +67,6 @@
     color: #fff;
 }
 
-.topic-btn:active { transform: translateY(-1px); }
 
 .exercise-title {
     margin: 0 0 18px;
@@ -642,12 +640,9 @@ button,
     -webkit-tap-highlight-color: transparent;
 }
 
-button:active,
-.option-label:active {
-    transform: scale(.965);
-}
 
 button.is-pressed,
 .option-label.is-pressed {
     animation: tap-press .24s var(--ease);
+    transition: none;
 }
