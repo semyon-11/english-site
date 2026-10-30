@@ -341,16 +341,6 @@ button,
     -webkit-tap-highlight-color: transparent;
 }
 
-button:active,
-.option-label:active {
-    transform: scale(.965);
-}
-
-button.is-pressed,
-.option-label.is-pressed {
-    animation: tap-press .24s var(--ease);
-}
-
 .container {
     width: min(100%, 1280px);
     max-width: 1280px;
