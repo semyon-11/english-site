@@ -93,14 +93,12 @@
             var control = findControl(event.target);
             if (!isAvailable(control)) return;
             animateControl(control);
-            playClickSound();
         }, { passive: true });
 
         document.addEventListener('click', function(event) {
-            if (event.detail !== 0) return;
             var control = findControl(event.target);
             if (!isAvailable(control)) return;
-            animateControl(control);
+            if (event.detail === 0) animateControl(control);
             playClickSound();
         });
     }
